@@ -13,6 +13,10 @@ import org.edisoncor.gui.panel.PanelImage;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -69,6 +73,7 @@ public class SucursalControlPanel extends javax.swing.JPanel {
 
                 JButton btnDeleteSucursal = new JButton("X");
                 JButton btnSetStatus = new JButton();
+
                 if (sucursal.isStatus()) {
                     btnSetStatus.setText("Desactivar");
                 } else {
@@ -105,11 +110,13 @@ public class SucursalControlPanel extends javax.swing.JPanel {
                         ex.printStackTrace();
                     }
                 });
-                JPanel buttons = new JPanel();
-                buttons.add(btnDeleteSucursal);
-                buttons.add(btnSetStatus);
 
-                model.addRow(new Object[]{sucursal.getIdSucursal(), sucursal.getNombre(), sucursal.getDireccion(), sucursal.getTelefono(), buttons});
+
+                jTable1.getColumn("Estado").setCellRenderer(new ButtonRenderer());
+                jTable1.getColumn("Estado").setCellEditor(new ButtonEditor(new JCheckBox(), btnSetStatus));
+                jTable1.getColumn("Eliminar").setCellRenderer(new ButtonRenderer());
+                jTable1.getColumn("Eliminar").setCellEditor(new ButtonEditor(new JCheckBox(), btnDeleteSucursal));
+                model.addRow(new Object[]{sucursal.getIdSucursal(), sucursal.getNombre(), sucursal.getDireccion(), sucursal.getTelefono(), "Estado", "Eliminar"});
                 jTable1.setModel(model);
                 jTable1.updateUI();
             }
@@ -169,14 +176,14 @@ public class SucursalControlPanel extends javax.swing.JPanel {
 
             },
             new String [] {
-                "ID_Sucursal", "Nombre", "Dirección", "Número", "Editar"
+                "ID_Sucursal", "Nombre", "Dirección", "Número", "Estado", "Eliminar"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -280,6 +287,60 @@ public class SucursalControlPanel extends javax.swing.JPanel {
             fieldGainsSucursal.setValue(100);
         }
     }//GEN-LAST:event_fieldGainsSucursalPropertyChange
+
+    /////////////////////////
+    class ButtonRenderer extends JButton implements TableCellRenderer {
+        public ButtonRenderer() {
+            setOpaque(true);
+        }
+
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            setText((value == null) ? "" : value.toString());
+            return this;
+        }
+    }
+
+    class ButtonEditor extends DefaultCellEditor {
+        protected JButton button;
+        private String label;
+        private boolean isPushed;
+
+        public ButtonEditor(JCheckBox checkBox, JButton button) {
+            super(checkBox);
+            this.button = button;
+            this.button.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    fireEditingStopped();
+                }
+            });
+        }
+
+        public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
+            label = (value == null) ? "" : value.toString();
+            button.setText(label);
+            isPushed = true;
+            return button;
+        }
+
+        public Object getCellEditorValue() {
+            if (isPushed) {
+                // Perform action
+            }
+            isPushed = false;
+            return label;
+        }
+
+        public boolean stopCellEditing() {
+            isPushed = false;
+            return super.stopCellEditing();
+        }
+
+        protected void fireEditingStopped() {
+            super.fireEditingStopped();
+        }
+    }
+
+
 
 
 

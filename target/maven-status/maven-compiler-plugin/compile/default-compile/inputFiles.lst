@@ -1,10 +1,12 @@
 C:\Users\hfyh\OneDrive\Documentos\NetBeansProjects\ProyectoSuscripciones\src\main\java\com\mycompany\proyectosuscripciones\ProyectoSuscripciones.java
-C:\Users\hfyh\OneDrive\Documentos\NetBeansProjects\ProyectoSuscripciones\src\main\java\Models\Admin.java
-C:\Users\hfyh\OneDrive\Documentos\NetBeansProjects\ProyectoSuscripciones\src\main\java\Models\Client.java
-C:\Users\hfyh\OneDrive\Documentos\NetBeansProjects\ProyectoSuscripciones\src\main\java\Models\Seller.java
+C:\Users\hfyh\OneDrive\Documentos\NetBeansProjects\ProyectoSuscripciones\src\main\java\com\mycompany\proyectosuscripciones\Response.java
+C:\Users\hfyh\OneDrive\Documentos\NetBeansProjects\ProyectoSuscripciones\src\main\java\com\mycompany\proyectosuscripciones\ServerFrame.java
+C:\Users\hfyh\OneDrive\Documentos\NetBeansProjects\ProyectoSuscripciones\src\main\java\Models\Comition.java
+C:\Users\hfyh\OneDrive\Documentos\NetBeansProjects\ProyectoSuscripciones\src\main\java\Models\Payment.java
 C:\Users\hfyh\OneDrive\Documentos\NetBeansProjects\ProyectoSuscripciones\src\main\java\Models\Subscription.java
 C:\Users\hfyh\OneDrive\Documentos\NetBeansProjects\ProyectoSuscripciones\src\main\java\Models\Sucursal.java
 C:\Users\hfyh\OneDrive\Documentos\NetBeansProjects\ProyectoSuscripciones\src\main\java\Models\User.java
+C:\Users\hfyh\OneDrive\Documentos\NetBeansProjects\ProyectoSuscripciones\src\main\java\Utilities\Paths.java
 C:\Users\hfyh\OneDrive\Documentos\NetBeansProjects\ProyectoSuscripciones\src\main\java\Views\AddAdminControlPanel.java
 C:\Users\hfyh\OneDrive\Documentos\NetBeansProjects\ProyectoSuscripciones\src\main\java\Views\ChooseSubscription.java
 C:\Users\hfyh\OneDrive\Documentos\NetBeansProjects\ProyectoSuscripciones\src\main\java\Views\ControlPanel.java
@@ -12,5 +14,6 @@ C:\Users\hfyh\OneDrive\Documentos\NetBeansProjects\ProyectoSuscripciones\src\mai
 C:\Users\hfyh\OneDrive\Documentos\NetBeansProjects\ProyectoSuscripciones\src\main\java\Views\HomeControlPanel.java
 C:\Users\hfyh\OneDrive\Documentos\NetBeansProjects\ProyectoSuscripciones\src\main\java\Views\Login.java
 C:\Users\hfyh\OneDrive\Documentos\NetBeansProjects\ProyectoSuscripciones\src\main\java\Views\Register.java
+C:\Users\hfyh\OneDrive\Documentos\NetBeansProjects\ProyectoSuscripciones\src\main\java\Views\RegisterGeneral.java
 C:\Users\hfyh\OneDrive\Documentos\NetBeansProjects\ProyectoSuscripciones\src\main\java\Views\SubscriptionPanel.java
 C:\Users\hfyh\OneDrive\Documentos\NetBeansProjects\ProyectoSuscripciones\src\main\java\Views\SucursalControlPanel.java
