@@ -4,27 +4,28 @@
  */
 package Models;
 
-import java.util.ArrayList;
-
 /**
  *
  * @author hfyh
  */
 public class Subscription {
     private int id_subscription;
-    private double price;
-    private String name;
-    private String description;
-    private ArrayList<String> advantages;
-    private int daysToExpire;
+    private User user;
+    private Sucursal sucursal;
+    private Double price;
+    private String start_date;
+    private String end_date;
+    private boolean status;
 
-    public Subscription(int id_subscription, double price, String name, String description, ArrayList<String> advantages, int daysToExpire) {
+    public Subscription(int id_subscription, boolean status, String end_date, String start_date, Double price, Sucursal sucursal, User user) {
         this.id_subscription = id_subscription;
         this.price = price;
-        this.name = name;
-        this.description = description;
-        this.advantages = advantages;
-        this.daysToExpire = daysToExpire;
+        this.status = status;
+        this.end_date = end_date;
+        this.start_date = start_date;
+        this.price = price;
+        this.sucursal = sucursal;
+        this.user = user;
     }
 
     public int getId_subscription() {
@@ -34,46 +35,54 @@ public class Subscription {
     public void setId_subscription(int id_subscription) {
         this.id_subscription = id_subscription;
     }
-    public int getDaysToExpire() {
-        return daysToExpire;
+
+    public User getUser() {
+        return user;
     }
 
-    public void setDaysToExpire(int daysToExpire) {
-        this.daysToExpire = daysToExpire;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public double getPrice() {
+    public Sucursal getSucursal() {
+        return sucursal;
+    }
+
+    public void setSucursal(Sucursal sucursal) {
+        this.sucursal = sucursal;
+    }
+
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
-    public String getName() {
-        return name;
+    public String getStart_date() {
+        return start_date;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setStart_date(String start_date) {
+        this.start_date = start_date;
     }
 
-    public String getDescription() {
-        return description;
+    public String getEnd_date() {
+        return end_date;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setEnd_date(String end_date) {
+        this.end_date = end_date;
     }
 
-    public ArrayList<String> getAdvantages() {
-        return advantages;
+    public boolean isStatus() {
+        return status;
     }
 
-    public void setAdvantages(ArrayList<String> advantages) {
-        this.advantages = advantages;
+    public void setStatus(boolean status) {
+        this.status = status;
     }
-    
-    
-    
+
+
 }

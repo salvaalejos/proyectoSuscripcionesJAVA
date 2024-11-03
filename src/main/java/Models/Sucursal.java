@@ -11,60 +11,87 @@ import java.util.ArrayList;
  * @author hfyh
  */
 public class Sucursal {
-    private int id_sucursal;
-    private String name;
-    private String adress;
-    private String phone;
-    private ArrayList<Subscription> subscriptions;
-    
+    private Integer idSucursal;
+    private String nombre;
+    private String direccion;
+    private Double porcentajeGananciaAdmin;
+    private Double porcentajeGananciaSucursal;
+    private String telefono;
+    private Integer idAdmin;
+    private boolean status;
 
-    public Sucursal(int id_sucursal, String adress, String phone, ArrayList<Subscription> subscriptions, String name) {
-        this.id_sucursal = id_sucursal;
-        this.adress = adress;
-        this.phone = phone;
-        this.subscriptions = subscriptions;
-        this.name = name;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-    
-    public int getId_sucursal() {
-        return id_sucursal;
+    public Sucursal(Integer idSucursal, String nombre, String direccion, Double porcentajeGananciaAdmin, Double porcentajeGananciaSucursal, String telefono, Integer idAdmin, boolean status) {
+        this.idSucursal = idSucursal;
+        this.nombre = nombre;
+        this.direccion = direccion;
+        this.porcentajeGananciaAdmin = porcentajeGananciaAdmin;
+        this.porcentajeGananciaSucursal = porcentajeGananciaSucursal;
+        this.telefono = telefono;
+        this.idAdmin = idAdmin;
+        this.status = status;
     }
 
-    public void setId_sucursal(int id_sucursal) {
-        this.id_sucursal = id_sucursal;
+    public Integer getIdSucursal() {
+        return idSucursal;
     }
 
-    public String getAdress() {
-        return adress;
+    public void setIdSucursal(Integer idSucursal) {
+        this.idSucursal = idSucursal;
     }
 
-    public void setAdress(String adress) {
-        this.adress = adress;
+    public String getNombre() {
+        return nombre;
     }
 
-    public String getPhone() {
-        return phone;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public String getDireccion() {
+        return direccion;
     }
 
-    public ArrayList<Subscription> getSubscriptions() {
-        return subscriptions;
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
     }
 
-    public void setSubscriptions(ArrayList<Subscription> subscriptions) {
-        this.subscriptions = subscriptions;
+    public Double getPorcentajeGananciaAdmin() {
+        return porcentajeGananciaAdmin;
     }
-    
-    
+
+    public void setPorcentajeGananciaAdmin(Double porcentajeGananciaAdmin) {
+        this.porcentajeGananciaAdmin = porcentajeGananciaAdmin;
+    }
+
+    public Double getPorcentajeGananciaSucursal() {
+        return porcentajeGananciaSucursal;
+    }
+
+    public void setPorcentajeGananciaSucursal(Double porcentajeGananciaSucursal) {
+        this.porcentajeGananciaSucursal = porcentajeGananciaSucursal;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
+    public Integer getIdAdmin() {
+        return idAdmin;
+    }
+
+    public void setIdAdmin(Integer idAdmin) {
+        this.idAdmin = idAdmin;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
 }

@@ -4,13 +4,13 @@
  */
 package Views;
 
+import Models.User;
+
 import java.awt.BorderLayout;
 import java.awt.Button;
 import java.awt.Color;
 import java.awt.Image;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 /**
  *
@@ -23,9 +23,16 @@ public class ControlPanel extends javax.swing.JFrame {
      */
     ImageIcon homeUnfocus = new ImageIcon("src\\main\\java\\Images\\home-unfocus.png");
     ImageIcon homeFocus = new ImageIcon("src\\main\\java\\Images\\home-focus.png");
-    
+    private User admin;
     
     public ControlPanel() {
+        initComponents();
+        panelControlContent.setLayout(new BorderLayout());
+        setLocationRelativeTo(null);
+    }
+
+    public ControlPanel(User admin) {
+        this.admin = admin;
         initComponents();
         panelControlContent.setLayout(new BorderLayout());
         setLocationRelativeTo(null);
@@ -95,6 +102,11 @@ public class ControlPanel extends javax.swing.JFrame {
                 btnClientsMouseExited(evt);
             }
         });
+        btnClients.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClientsActionPerformed(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Roboto Medium", 0, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(120, 135, 152));
@@ -134,6 +146,11 @@ public class ControlPanel extends javax.swing.JFrame {
                 btnAccountMouseExited(evt);
             }
         });
+        btnAccount.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAccountActionPerformed(evt);
+            }
+        });
 
         btnSellers.setBackground(new java.awt.Color(255, 255, 255));
         btnSellers.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
@@ -147,6 +164,11 @@ public class ControlPanel extends javax.swing.JFrame {
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 btnSellersMouseExited(evt);
+            }
+        });
+        btnSellers.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSellersActionPerformed(evt);
             }
         });
 
@@ -166,6 +188,11 @@ public class ControlPanel extends javax.swing.JFrame {
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 btnSucursalMouseExited(evt);
+            }
+        });
+        btnSucursal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSucursalActionPerformed(evt);
             }
         });
 
@@ -348,7 +375,7 @@ public class ControlPanel extends javax.swing.JFrame {
         panelControlContent.removeAll();
 
         // Añadir el nuevo panel (homePanel)
-        panelControlContent.add(new HomeControlPanel());
+        panelControlContent.add(new HomeControlPanel(panelControlContent, admin ));
 
         // Actualizar la interfaz gráfica
         panelControlContent.updateUI();
@@ -359,7 +386,7 @@ public class ControlPanel extends javax.swing.JFrame {
         panelControlContent.removeAll();
 
         // Añadir el nuevo panel (homePanel)
-        panelControlContent.add(new HomeControlPanel());
+        panelControlContent.add(new HomeControlPanel(panelControlContent, admin));
 
         // Actualizar la interfaz gráfica
         panelControlContent.updateUI();
@@ -367,14 +394,34 @@ public class ControlPanel extends javax.swing.JFrame {
 
     private void btnNewAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewAdminActionPerformed
         // TODO add your handling code here:
+        new RegisterGeneral(admin).setVisible(true);
+        dispose();
+    }//GEN-LAST:event_btnNewAdminActionPerformed
+
+    private void btnSucursalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSucursalActionPerformed
+        // TODO add your handling code here:
         panelControlContent.removeAll();
 
-        // Añadir el nuevo panel (homePanel)
-        panelControlContent.add(new HomeControlPanel());
+        // Añadir el nuevo panel (succursalPanel)
+        panelControlContent.add(new SucursalControlPanel(admin));
 
         // Actualizar la interfaz gráfica
         panelControlContent.updateUI();
-    }//GEN-LAST:event_btnNewAdminActionPerformed
+
+
+    }//GEN-LAST:event_btnSucursalActionPerformed
+
+    private void btnSellersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSellersActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnSellersActionPerformed
+
+    private void btnClientsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientsActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnClientsActionPerformed
+
+    private void btnAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAccountActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAccountActionPerformed
 
     /**
      * @param args the command line arguments

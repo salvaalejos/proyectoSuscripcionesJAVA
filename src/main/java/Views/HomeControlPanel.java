@@ -4,6 +4,10 @@
  */
 package Views;
 
+import Models.User;
+
+import javax.swing.*;
+
 /**
  *
  * @author hfyh
@@ -13,9 +17,14 @@ public class HomeControlPanel extends javax.swing.JPanel {
     /**
      * Creates new form HomeControlPanel
      */
-    
-    public HomeControlPanel() {
+    private JPanel parent;
+    private User admin;
+
+    public HomeControlPanel(JPanel parent, User user) {
+        this.parent = parent;
+        this.admin = user;
         initComponents();
+        lblName.setText(user.getName());
         
     }
 
@@ -38,7 +47,8 @@ public class HomeControlPanel extends javax.swing.JPanel {
         jPanel4 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         panelImage1 = new org.edisoncor.gui.panel.PanelImage();
-        jButton1 = new javax.swing.JButton();
+        btnSeeSucursales = new javax.swing.JButton();
+        lblName = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(245, 245, 249));
 
@@ -114,7 +124,7 @@ public class HomeControlPanel extends javax.swing.JPanel {
 
         jLabel1.setFont(new java.awt.Font("Roboto Medium", 0, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(105, 108, 255));
-        jLabel1.setText("Bienvenido de nuevo, Admin!");
+        jLabel1.setText("Bienvenido de nuevo, ");
 
         panelImage1.setIcon(new javax.swing.ImageIcon("C:\\Users\\hfyh\\OneDrive\\Documentos\\NetBeansProjects\\ProyectoSuscripciones\\src\\main\\java\\Images\\man-with-laptop-light.png")); // NOI18N
 
@@ -129,11 +139,20 @@ public class HomeControlPanel extends javax.swing.JPanel {
             .addGap(0, 87, Short.MAX_VALUE)
         );
 
-        jButton1.setBackground(new java.awt.Color(255, 255, 255));
-        jButton1.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(105, 108, 255));
-        jButton1.setText("Ver sucursales");
-        jButton1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(105, 108, 255), 1, true));
+        btnSeeSucursales.setBackground(new java.awt.Color(255, 255, 255));
+        btnSeeSucursales.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        btnSeeSucursales.setForeground(new java.awt.Color(105, 108, 255));
+        btnSeeSucursales.setText("Ver sucursales");
+        btnSeeSucursales.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(105, 108, 255), 1, true));
+        btnSeeSucursales.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSeeSucursalesActionPerformed(evt);
+            }
+        });
+
+        lblName.setFont(new java.awt.Font("Roboto Medium", 0, 18)); // NOI18N
+        lblName.setForeground(new java.awt.Color(51, 51, 51));
+        lblName.setText("Admin!");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -142,8 +161,11 @@ public class HomeControlPanel extends javax.swing.JPanel {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(16, 16, 16)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 438, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnSeeSucursales, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblName)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(panelImage1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(64, 64, 64))
@@ -155,9 +177,11 @@ public class HomeControlPanel extends javax.swing.JPanel {
                 .addComponent(panelImage1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblName, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnSeeSucursales, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(18, Short.MAX_VALUE))
         );
 
@@ -206,9 +230,16 @@ public class HomeControlPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnSeeSucursalesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeeSucursalesActionPerformed
+        // TODO add your handling code here:
+        parent.removeAll();
+        parent.add(new SucursalControlPanel(this.admin));
+        parent.updateUI();
+    }//GEN-LAST:event_btnSeeSucursalesActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnSeeSucursales;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -217,6 +248,7 @@ public class HomeControlPanel extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JLabel lblName;
     private org.edisoncor.gui.panel.PanelImage panelImage1;
     private org.edisoncor.gui.panel.PanelShadow panelShadow1;
     // End of variables declaration//GEN-END:variables

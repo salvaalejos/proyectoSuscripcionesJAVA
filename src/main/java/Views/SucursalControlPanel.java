@@ -4,17 +4,133 @@
  */
 package Views;
 
+import Models.Sucursal;
+import Models.User;
+import Utilities.Paths;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import org.edisoncor.gui.panel.PanelImage;
+
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.util.ArrayList;
+
+import static Utilities.Paths.SUCURSAL_FILE;
+
 /**
  *
  * @author hfyh
  */
 public class SucursalControlPanel extends javax.swing.JPanel {
-
+    
+    private ArrayList<Sucursal> sucursales = new ArrayList<Sucursal>();
+    private User admin;
     /**
      * Creates new form SucursalControlPanel
      */
     public SucursalControlPanel() {
         initComponents();
+    }
+    
+    public SucursalControlPanel(User admin) {
+        this.admin = admin;
+        initComponents();
+        readSucursales();
+    }
+
+
+    private void readSucursales(){
+        sucursales.clear();
+
+        try {
+            BufferedReader br = new BufferedReader(
+                new FileReader(SUCURSAL_FILE)
+            );
+            String lectura;
+            String resultado = "";
+            while((lectura = br.readLine()) != null) {
+                resultado += lectura;
+            }
+            br.close();
+            
+            if(resultado.length() > 0) {
+                java.lang.reflect.Type listType = 
+                    new TypeToken<ArrayList<Sucursal>>() {}.getType();
+                
+                sucursales = new Gson().fromJson(resultado, listType);
+            }
+            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+            model.setRowCount(0);
+            for(Sucursal sucursal : sucursales){
+
+
+                JButton btnDeleteSucursal = new JButton("X");
+                JButton btnSetStatus = new JButton();
+                if (sucursal.isStatus()) {
+                    btnSetStatus.setText("Desactivar");
+                } else {
+                    btnSetStatus.setText("Activar");
+                }
+
+                btnDeleteSucursal.addActionListener(e -> {
+                    sucursales.remove(sucursal);
+                    String json = new Gson().toJson(sucursales);
+                    try {
+                        FileWriter fw = new FileWriter(SUCURSAL_FILE);
+                        fw.write(json);
+                        fw.close();
+                        readSucursales();
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                });
+
+                btnSetStatus.addActionListener(e -> {
+                    sucursal.setStatus(!sucursal.isStatus());
+                    if(!sucursal.isStatus()){
+                        btnSetStatus.setText("Activar");
+                    } else{
+                        btnSetStatus.setText("Desactivar");
+                    }
+                    String json = new Gson().toJson(sucursales);
+                    try {
+                        FileWriter fw = new FileWriter(SUCURSAL_FILE);
+                        fw.write(json);
+                        fw.close();
+                        readSucursales();
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                });
+                JPanel buttons = new JPanel();
+                buttons.add(btnDeleteSucursal);
+                buttons.add(btnSetStatus);
+
+                model.addRow(new Object[]{sucursal.getIdSucursal(), sucursal.getNombre(), sucursal.getDireccion(), sucursal.getTelefono(), buttons});
+                jTable1.setModel(model);
+                jTable1.updateUI();
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    private void addSucursal(Sucursal sucursal){
+        try {
+            sucursales.add(sucursal);
+            String json = new Gson().toJson(sucursales);
+            
+            FileWriter fw = new FileWriter(SUCURSAL_FILE);
+            fw.write(json);
+            fw.close();
+            readSucursales();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -29,8 +145,17 @@ public class SucursalControlPanel extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         btnAddSucursal = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        fieldName = new javax.swing.JTextField();
+        fieldAdress = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        fieldPhone = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        fieldGainsSucursal = new javax.swing.JSpinner();
 
         setBackground(new java.awt.Color(245, 245, 249));
+        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
         jScrollPane1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
@@ -44,7 +169,7 @@ public class SucursalControlPanel extends javax.swing.JPanel {
 
             },
             new String [] {
-                "ID_Sucursal", "Nombre", "Dirección", "Número", "Suscripciones"
+                "ID_Sucursal", "Nombre", "Dirección", "Número", "Editar"
             }
         ) {
             Class[] types = new Class [] {
@@ -64,39 +189,110 @@ public class SucursalControlPanel extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(jTable1);
 
+        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 740, 465));
+
         btnAddSucursal.setBackground(new java.awt.Color(105, 108, 255));
         btnAddSucursal.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
         btnAddSucursal.setForeground(new java.awt.Color(255, 255, 255));
         btnAddSucursal.setText("Añadir sucursal");
         btnAddSucursal.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        btnAddSucursal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddSucursalActionPerformed(evt);
+            }
+        });
+        add(btnAddSucursal, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 600, 180, 40));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 740, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(33, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnAddSucursal, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(311, 311, 311))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 465, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 88, Short.MAX_VALUE)
-                .addComponent(btnAddSucursal, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(80, 80, 80))
-        );
+        jLabel1.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Nombre sucursal");
+        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 510, 180, -1));
+
+        fieldName.setBackground(new java.awt.Color(255, 255, 255));
+        fieldName.setFont(new java.awt.Font("Roboto Light", 0, 14)); // NOI18N
+        fieldName.setForeground(new java.awt.Color(0, 0, 0));
+        add(fieldName, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 530, 180, 30));
+
+        fieldAdress.setBackground(new java.awt.Color(255, 255, 255));
+        fieldAdress.setFont(new java.awt.Font("Roboto Light", 0, 14)); // NOI18N
+        fieldAdress.setForeground(new java.awt.Color(0, 0, 0));
+        add(fieldAdress, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 530, 180, 30));
+
+        jLabel2.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("Dirección");
+        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 510, 180, -1));
+
+        fieldPhone.setBackground(new java.awt.Color(255, 255, 255));
+        fieldPhone.setFont(new java.awt.Font("Roboto Light", 0, 14)); // NOI18N
+        fieldPhone.setForeground(new java.awt.Color(0, 0, 0));
+        add(fieldPhone, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 530, 180, 30));
+
+        jLabel3.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setText("Telefono");
+        add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 510, 180, -1));
+
+        jLabel4.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setText("% Ganancia sucursal");
+        add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 590, 180, -1));
+
+        fieldGainsSucursal.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        fieldGainsSucursal.setModel(new javax.swing.SpinnerNumberModel(1.0d, 0.0d, 100.0d, 5.0d));
+        fieldGainsSucursal.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        fieldGainsSucursal.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                fieldGainsSucursalPropertyChange(evt);
+            }
+        });
+        add(fieldGainsSucursal, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 610, 180, 30));
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnAddSucursalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddSucursalActionPerformed
+        // TODO add your handling code here:
+        String name = fieldName.getText();
+        String adress = fieldName.getText();
+        String phone = fieldName.getText();
+        Double gananciaSucursal = (double) fieldGainsSucursal.getValue();
+        Double gananciaAdmin = 100 - gananciaSucursal;
+        Integer idSucursal = sucursales.size() + 1;
+        if(name.isEmpty() || adress.isEmpty() || phone.isEmpty()){
+            return;
+        }
+        Sucursal sucursal = new Sucursal(idSucursal, name, adress,gananciaAdmin, gananciaSucursal, phone, admin.getId_user(), true);
+        addSucursal(sucursal);
+        fieldName.setText("");
+        fieldAdress.setText("");
+        fieldPhone.setText("");
+        fieldGainsSucursal.setValue(1.0);
+
+        
+    }//GEN-LAST:event_btnAddSucursalActionPerformed
+
+    private void fieldGainsSucursalPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_fieldGainsSucursalPropertyChange
+        // TODO add your handling code here:
+        if ((double) fieldGainsSucursal.getValue() > 100.0) {
+            fieldGainsSucursal.setValue(100);
+        }
+    }//GEN-LAST:event_fieldGainsSucursalPropertyChange
+
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddSucursal;
+    private javax.swing.JTextField fieldAdress;
+    private javax.swing.JSpinner fieldGainsSucursal;
+    private javax.swing.JTextField fieldName;
+    private javax.swing.JTextField fieldPhone;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables

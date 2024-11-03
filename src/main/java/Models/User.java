@@ -9,24 +9,44 @@ package Models;
  * @author hfyh
  */
 public class User {
-    private int id_user;
+    private Integer id_user;
     private String name;
     private String username;
+    private String password;
     private String phone;
-    private int user_type;
-    private Sucursal sucursal;
+    private int user_type; // 1 = admin, 2 = user, 3 = cashier
+    private Integer idSucursal;
     private String email;
+    private boolean status;
 
-    public User(int id_user, String name, String username, String phone, int user_type, Sucursal sucursal, String email) {
+    public User(Integer id_user, String name, String username, String phone, int user_type, Integer idSucursal, String email, boolean status, String password) {
         this.id_user = id_user;
         this.name = name;
         this.username = username;
         this.phone = phone;
         this.user_type = user_type;
-        this.sucursal = sucursal;
+        this.idSucursal = idSucursal;
         this.email = email;
+        this.password = password;
+        this.status = status;
+
     }
-    
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
 
     public int getId_user() {
         return id_user;
@@ -68,12 +88,12 @@ public class User {
         this.user_type = user_type;
     }
 
-    public Sucursal getSucursal() {
-        return sucursal;
+    public Integer getSucursal() {
+        return idSucursal;
     }
 
-    public void setSucursal(Sucursal sucursal) {
-        this.sucursal = sucursal;
+    public void setSucursal(Integer idSucursal) {
+        this.idSucursal = idSucursal;
     }
 
     public String getEmail() {
@@ -84,6 +104,8 @@ public class User {
         this.email = email;
     }
     
-    
+    public User getUser(){
+        return this;
+    }
     
 }

@@ -4,11 +4,18 @@
  */
 package Views;
 
-import Models.Admin;
+import Models.User;
 import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.FlatLightLaf;
 import com.google.gson.Gson;
-import javax.swing.SwingUtilities;
+import com.google.gson.reflect.TypeToken;
+
+import javax.swing.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.util.ArrayList;
+
+import static Utilities.Paths.USER_FILE;
 
 /**
  *
@@ -19,6 +26,9 @@ public class Login extends javax.swing.JFrame {
     /**
      * Creates new form Login
      */
+    private ArrayList<User> users = new ArrayList<User>();
+
+
     private int actualTheme = 0;
     
     public Login() {
@@ -61,6 +71,11 @@ public class Login extends javax.swing.JFrame {
         lblErrorMessage = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(245, 245, 249));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -83,6 +98,11 @@ public class Login extends javax.swing.JFrame {
         btnRegister.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
         btnRegister.setForeground(new java.awt.Color(255, 255, 255));
         btnRegister.setText("Registrar");
+        btnRegister.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegisterActionPerformed(evt);
+            }
+        });
         jPanel1.add(btnRegister, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 460, 120, 40));
 
         btnLogin.setBackground(new java.awt.Color(51, 102, 255));
@@ -117,7 +137,7 @@ public class Login extends javax.swing.JFrame {
         });
         jPanel1.add(btnClearUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 310, 40, 40));
 
-        btnTheme.setBackground(new java.awt.Color(204, 204, 204));
+        btnTheme.setBackground(new java.awt.Color(245, 245, 249));
         btnTheme.setIcon(new javax.swing.ImageIcon("C:\\Users\\hfyh\\OneDrive\\Documentos\\NetBeansProjects\\ProyectoSuscripciones\\src\\main\\java\\Images\\dark-mode-black.png")); // NOI18N
         btnTheme.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         btnTheme.addActionListener(new java.awt.event.ActionListener() {
@@ -228,19 +248,82 @@ public class Login extends javax.swing.JFrame {
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         // TODO add your handling code here:
         try {
-            if(fieldUsername.getText().isEmpty() || fieldPassword.getPassword().toString().isEmpty()){
+            String username = fieldUsername.getText();
+            String password = new String(fieldPassword.getPassword());
+
+
+            if(username.isEmpty() || password.isEmpty()){
                 lblErrorMessage.setText("Ingrese todos los datos");
                 panelErrorMessage.setVisible(true);
             } else{
                 panelErrorMessage.setVisible(false);
-                new ControlPanel().setVisible(true);
-                dispose();
+                System.out.println("Username: " + username);
+                System.out.println("Password: " + password);
+                for (User user : users) {
+                    if(user.getUsername().equals(username) && user.getPassword().equals(password)){
+                        int user_type = user.getUser_type();
+                        switch (user_type){
+                            case 1: // Admin
+                                new ControlPanel(user).setVisible(true);
+                                dispose();
+                                break;
+                            case 2: // Usuario
+                                JOptionPane.showMessageDialog(this, "Usuario tipo 2");
+                                break;
+                            case 3: // Vendedor
+                                JOptionPane.showMessageDialog(this, "Usuario tipo 3");
+                                break;
+                            default:
+                                System.out.println("Usuario tipo 0");
+                                break;
+                        }
+
+                        break;
+                    } else {
+                        lblErrorMessage.setText("Usuario o contraseña incorrectos");
+                        panelErrorMessage.setVisible(true);
+                    }
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
         
     }//GEN-LAST:event_btnLoginActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        // TODO add your handling code here:
+        readUsers();
+    }//GEN-LAST:event_formWindowOpened
+
+    private void btnRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterActionPerformed
+        // TODO add your handling code here:
+        new Register().setVisible(true);
+        dispose();
+    }//GEN-LAST:event_btnRegisterActionPerformed
+
+    private void readUsers(){
+        users.clear();
+        try {
+            BufferedReader br = new BufferedReader( new FileReader(USER_FILE));
+            String lectura;
+            String resultado = "";
+            while((lectura = br.readLine()) != null) {
+                resultado += lectura;
+            }
+            br.close();
+
+            if(resultado.length() > 0) {
+                java.lang.reflect.Type listType =
+                        new TypeToken<ArrayList<User>>() {}.getType();
+
+                users = new Gson().fromJson(resultado, listType);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     /**
      * @param args the command line arguments
