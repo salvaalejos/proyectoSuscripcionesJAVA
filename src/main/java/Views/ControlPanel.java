@@ -5,6 +5,7 @@
 package Views;
 
 import Models.User;
+import Utilities.Paths;
 
 import java.awt.BorderLayout;
 import java.awt.Button;
@@ -36,6 +37,12 @@ public class ControlPanel extends javax.swing.JFrame {
         initComponents();
         panelControlContent.setLayout(new BorderLayout());
         setLocationRelativeTo(null);
+        logoImage.setIcon(new ImageIcon(Paths.PONY_LOGO));
+        btnHome.setIcon(new ImageIcon(Paths.HOME_UNFOCUS));
+        btnAccount.setIcon(new ImageIcon(Paths.USER_ICON));
+        btnSellers.setIcon(new ImageIcon(Paths.USERS_ICON));
+        btnSucursal.setIcon(new ImageIcon(Paths.WORLD));
+        btnClients.setIcon(new ImageIcon(Paths.CARRITO));
     }
 
     /**
@@ -49,7 +56,7 @@ public class ControlPanel extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        panelImage1 = new org.edisoncor.gui.panel.PanelImage();
+        logoImage = new org.edisoncor.gui.panel.PanelImage();
         btnClients = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         btnHome = new javax.swing.JButton();
@@ -59,6 +66,7 @@ public class ControlPanel extends javax.swing.JFrame {
         btnSucursal = new javax.swing.JButton();
         btnNewAdmin = new javax.swing.JButton();
         btnUnlog = new javax.swing.JButton();
+        btnSubscriptions = new javax.swing.JButton();
         panelControlContent = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -75,23 +83,20 @@ public class ControlPanel extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setForeground(new java.awt.Color(255, 255, 255));
 
-        panelImage1.setIcon(new javax.swing.ImageIcon("C:\\Users\\hfyh\\OneDrive\\Documentos\\NetBeansProjects\\ProyectoSuscripciones\\src\\main\\java\\Images\\PonyFood.png")); // NOI18N
-
-        javax.swing.GroupLayout panelImage1Layout = new javax.swing.GroupLayout(panelImage1);
-        panelImage1.setLayout(panelImage1Layout);
-        panelImage1Layout.setHorizontalGroup(
-            panelImage1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout logoImageLayout = new javax.swing.GroupLayout(logoImage);
+        logoImage.setLayout(logoImageLayout);
+        logoImageLayout.setHorizontalGroup(
+            logoImageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 135, Short.MAX_VALUE)
         );
-        panelImage1Layout.setVerticalGroup(
-            panelImage1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        logoImageLayout.setVerticalGroup(
+            logoImageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 135, Short.MAX_VALUE)
         );
 
         btnClients.setBackground(new java.awt.Color(255, 255, 255));
         btnClients.setFont(new java.awt.Font("Roboto Medium", 0, 16)); // NOI18N
         btnClients.setForeground(new java.awt.Color(120, 135, 152));
-        btnClients.setIcon(new javax.swing.ImageIcon("C:\\Users\\hfyh\\OneDrive\\Documentos\\NetBeansProjects\\ProyectoSuscripciones\\src\\main\\java\\Images\\usuarios-alt.png")); // NOI18N
         btnClients.setText("Gestionar clientes");
         btnClients.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         btnClients.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -115,7 +120,6 @@ public class ControlPanel extends javax.swing.JFrame {
         btnHome.setBackground(new java.awt.Color(255, 255, 255));
         btnHome.setFont(new java.awt.Font("Roboto Medium", 0, 16)); // NOI18N
         btnHome.setForeground(new java.awt.Color(120, 135, 152));
-        btnHome.setIcon(new javax.swing.ImageIcon("C:\\Users\\hfyh\\OneDrive\\Documentos\\NetBeansProjects\\ProyectoSuscripciones\\src\\main\\java\\Images\\home-unfocus.png")); // NOI18N
         btnHome.setText("Panel de control");
         btnHome.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         btnHome.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -135,7 +139,6 @@ public class ControlPanel extends javax.swing.JFrame {
         btnAccount.setBackground(new java.awt.Color(255, 255, 255));
         btnAccount.setFont(new java.awt.Font("Roboto Medium", 0, 16)); // NOI18N
         btnAccount.setForeground(new java.awt.Color(120, 135, 152));
-        btnAccount.setIcon(new javax.swing.ImageIcon("C:\\Users\\hfyh\\OneDrive\\Documentos\\NetBeansProjects\\ProyectoSuscripciones\\src\\main\\java\\Images\\usuario.png")); // NOI18N
         btnAccount.setText("Ajustes de cuenta");
         btnAccount.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         btnAccount.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -155,7 +158,6 @@ public class ControlPanel extends javax.swing.JFrame {
         btnSellers.setBackground(new java.awt.Color(255, 255, 255));
         btnSellers.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
         btnSellers.setForeground(new java.awt.Color(120, 135, 152));
-        btnSellers.setIcon(new javax.swing.ImageIcon("C:\\Users\\hfyh\\OneDrive\\Documentos\\NetBeansProjects\\ProyectoSuscripciones\\src\\main\\java\\Images\\carrito-de-compras.png")); // NOI18N
         btnSellers.setText("Gestionar vendedores");
         btnSellers.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         btnSellers.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -179,7 +181,6 @@ public class ControlPanel extends javax.swing.JFrame {
         btnSucursal.setBackground(new java.awt.Color(255, 255, 255));
         btnSucursal.setFont(new java.awt.Font("Roboto Medium", 0, 16)); // NOI18N
         btnSucursal.setForeground(new java.awt.Color(120, 135, 152));
-        btnSucursal.setIcon(new javax.swing.ImageIcon("C:\\Users\\hfyh\\OneDrive\\Documentos\\NetBeansProjects\\ProyectoSuscripciones\\src\\main\\java\\Images\\mundo.png")); // NOI18N
         btnSucursal.setText("Gestionar sucursal");
         btnSucursal.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         btnSucursal.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -218,6 +219,25 @@ public class ControlPanel extends javax.swing.JFrame {
             }
         });
 
+        btnSubscriptions.setBackground(new java.awt.Color(255, 255, 255));
+        btnSubscriptions.setFont(new java.awt.Font("Roboto Medium", 0, 16)); // NOI18N
+        btnSubscriptions.setForeground(new java.awt.Color(120, 135, 152));
+        btnSubscriptions.setText("Gestionar suscripciones");
+        btnSubscriptions.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        btnSubscriptions.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnSubscriptionsMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnSubscriptionsMouseExited(evt);
+            }
+        });
+        btnSubscriptions.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSubscriptionsActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -227,7 +247,7 @@ public class ControlPanel extends javax.swing.JFrame {
             .addComponent(btnSellers, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(33, 33, 33)
-                .addComponent(panelImage1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(logoImage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(btnSucursal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel2Layout.createSequentialGroup()
@@ -245,6 +265,7 @@ public class ControlPanel extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addComponent(btnSubscriptions, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel2Layout.createSequentialGroup()
                     .addContainerGap()
@@ -255,7 +276,7 @@ public class ControlPanel extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(panelImage1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(logoImage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(55, 55, 55)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -268,7 +289,9 @@ public class ControlPanel extends javax.swing.JFrame {
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnSucursal, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 88, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnSubscriptions, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
                 .addComponent(btnNewAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnUnlog, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -423,6 +446,25 @@ public class ControlPanel extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnAccountActionPerformed
 
+    private void btnSubscriptionsMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSubscriptionsMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnSubscriptionsMouseEntered
+
+    private void btnSubscriptionsMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSubscriptionsMouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnSubscriptionsMouseExited
+
+    private void btnSubscriptionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubscriptionsActionPerformed
+        // TODO add your handling code here:
+        panelControlContent.removeAll();
+
+        // Añadir el nuevo panel (succursalPanel)
+        panelControlContent.add(new SubscriptionControlPanel(admin));
+
+        // Actualizar la interfaz gráfica
+        panelControlContent.updateUI();
+    }//GEN-LAST:event_btnSubscriptionsActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -464,13 +506,14 @@ public class ControlPanel extends javax.swing.JFrame {
     private javax.swing.JButton btnHome;
     private javax.swing.JButton btnNewAdmin;
     private javax.swing.JButton btnSellers;
+    private javax.swing.JButton btnSubscriptions;
     private javax.swing.JButton btnSucursal;
     private javax.swing.JButton btnUnlog;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private org.edisoncor.gui.panel.PanelImage logoImage;
     private javax.swing.JPanel panelControlContent;
-    private org.edisoncor.gui.panel.PanelImage panelImage1;
     // End of variables declaration//GEN-END:variables
 }

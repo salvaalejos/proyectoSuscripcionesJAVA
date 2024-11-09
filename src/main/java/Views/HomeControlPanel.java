@@ -5,6 +5,7 @@
 package Views;
 
 import Models.User;
+import Utilities.Paths;
 
 import javax.swing.*;
 
@@ -24,7 +25,8 @@ public class HomeControlPanel extends javax.swing.JPanel {
         this.parent = parent;
         this.admin = user;
         initComponents();
-        lblName.setText(user.getName());
+        imageDecoration.setIcon(new ImageIcon(Paths.MAN));
+        lblName.setText(user.getName()+"!");
         
     }
 
@@ -46,7 +48,7 @@ public class HomeControlPanel extends javax.swing.JPanel {
         panelShadow1 = new org.edisoncor.gui.panel.PanelShadow();
         jPanel4 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        panelImage1 = new org.edisoncor.gui.panel.PanelImage();
+        imageDecoration = new org.edisoncor.gui.panel.PanelImage();
         btnSeeSucursales = new javax.swing.JButton();
         lblName = new javax.swing.JLabel();
 
@@ -126,16 +128,14 @@ public class HomeControlPanel extends javax.swing.JPanel {
         jLabel1.setForeground(new java.awt.Color(105, 108, 255));
         jLabel1.setText("Bienvenido de nuevo, ");
 
-        panelImage1.setIcon(new javax.swing.ImageIcon("C:\\Users\\hfyh\\OneDrive\\Documentos\\NetBeansProjects\\ProyectoSuscripciones\\src\\main\\java\\Images\\man-with-laptop-light.png")); // NOI18N
-
-        javax.swing.GroupLayout panelImage1Layout = new javax.swing.GroupLayout(panelImage1);
-        panelImage1.setLayout(panelImage1Layout);
-        panelImage1Layout.setHorizontalGroup(
-            panelImage1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout imageDecorationLayout = new javax.swing.GroupLayout(imageDecoration);
+        imageDecoration.setLayout(imageDecorationLayout);
+        imageDecorationLayout.setHorizontalGroup(
+            imageDecorationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 100, Short.MAX_VALUE)
         );
-        panelImage1Layout.setVerticalGroup(
-            panelImage1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        imageDecorationLayout.setVerticalGroup(
+            imageDecorationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 87, Short.MAX_VALUE)
         );
 
@@ -167,14 +167,14 @@ public class HomeControlPanel extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblName)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(panelImage1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(imageDecoration, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(64, 64, 64))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(panelImage1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(imageDecoration, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -240,6 +240,7 @@ public class HomeControlPanel extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSeeSucursales;
+    private org.edisoncor.gui.panel.PanelImage imageDecoration;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -249,7 +250,6 @@ public class HomeControlPanel extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JLabel lblName;
-    private org.edisoncor.gui.panel.PanelImage panelImage1;
     private org.edisoncor.gui.panel.PanelShadow panelShadow1;
     // End of variables declaration//GEN-END:variables
 }

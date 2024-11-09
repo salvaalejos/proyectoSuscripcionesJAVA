@@ -5,6 +5,7 @@
 package Views;
 
 import Models.User;
+import Utilities.Paths;
 import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.FlatLightLaf;
 import com.google.gson.Gson;
@@ -41,6 +42,9 @@ public class Login extends javax.swing.JFrame {
         
         initComponents();
         panelErrorMessage.setVisible(false);
+        panelImage1.setIcon(new ImageIcon(Paths.PONY_LOGO));
+        btnClearUsername.setIcon(new ImageIcon(Paths.EQUIS));
+        btnClearPassword.setIcon(new ImageIcon(Paths.EQUIS));
         
         setLocationRelativeTo(null);
     }
@@ -80,7 +84,7 @@ public class Login extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(245, 245, 249));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        panelImage1.setIcon(new javax.swing.ImageIcon("C:\\Users\\hfyh\\OneDrive\\Documentos\\NetBeansProjects\\ProyectoSuscripciones\\src\\main\\java\\Images\\PonyFood.png")); // NOI18N
+        panelImage1.setIcon(new javax.swing.ImageIcon("C:\\Users\\JESUS\\Documents\\Uni\\proyectoSuscripcionesJAVA\\src\\main\\java\\Images\\PonyFood.png")); // NOI18N
 
         javax.swing.GroupLayout panelImage1Layout = new javax.swing.GroupLayout(panelImage1);
         panelImage1.setLayout(panelImage1Layout);
@@ -118,7 +122,6 @@ public class Login extends javax.swing.JFrame {
         jPanel1.add(btnLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 460, 120, 40));
 
         btnClearPassword.setBackground(new java.awt.Color(245, 245, 249));
-        btnClearPassword.setIcon(new javax.swing.ImageIcon("C:\\Users\\hfyh\\OneDrive\\Documentos\\NetBeansProjects\\ProyectoSuscripciones\\src\\main\\java\\Images\\equis.png")); // NOI18N
         btnClearPassword.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         btnClearPassword.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -128,7 +131,6 @@ public class Login extends javax.swing.JFrame {
         jPanel1.add(btnClearPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 370, 40, 40));
 
         btnClearUsername.setBackground(new java.awt.Color(245, 245, 249));
-        btnClearUsername.setIcon(new javax.swing.ImageIcon("C:\\Users\\hfyh\\OneDrive\\Documentos\\NetBeansProjects\\ProyectoSuscripciones\\src\\main\\java\\Images\\equis.png")); // NOI18N
         btnClearUsername.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         btnClearUsername.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -138,7 +140,6 @@ public class Login extends javax.swing.JFrame {
         jPanel1.add(btnClearUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 310, 40, 40));
 
         btnTheme.setBackground(new java.awt.Color(245, 245, 249));
-        btnTheme.setIcon(new javax.swing.ImageIcon("C:\\Users\\hfyh\\OneDrive\\Documentos\\NetBeansProjects\\ProyectoSuscripciones\\src\\main\\java\\Images\\dark-mode-black.png")); // NOI18N
         btnTheme.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         btnTheme.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

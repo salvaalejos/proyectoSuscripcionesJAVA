@@ -6,6 +6,7 @@ package Views;
 
 import Models.Sucursal;
 import Models.User;
+import Utilities.Paths;
 import static Utilities.Paths.SUCURSAL_FILE;
 import static Utilities.Paths.USER_FILE;
 import com.formdev.flatlaf.FlatDarkLaf;
@@ -33,6 +34,7 @@ public class Register extends javax.swing.JFrame {
     
     public Register() {
         initComponents();
+        setLocationRelativeTo(null);
     }
     
     public Register(int actualTheme) {
@@ -43,6 +45,9 @@ public class Register extends javax.swing.JFrame {
             FlatDarkLaf.setup();
         }
         initComponents();
+        panelImage1.setIcon(new ImageIcon(Paths.PONY_LOGO));
+        
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -84,7 +89,7 @@ public class Register extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(245, 245, 249));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        panelImage1.setIcon(new javax.swing.ImageIcon("C:\\Users\\hfyh\\OneDrive\\Documentos\\NetBeansProjects\\ProyectoSuscripciones\\src\\main\\java\\Images\\PonyFood.png")); // NOI18N
+        panelImage1.setIcon(new javax.swing.ImageIcon("C:\\Users\\JESUS\\Documents\\Uni\\proyectoSuscripcionesJAVA\\src\\main\\java\\Images\\PonyFood.png")); // NOI18N
 
         javax.swing.GroupLayout panelImage1Layout = new javax.swing.GroupLayout(panelImage1);
         panelImage1.setLayout(panelImage1Layout);
@@ -144,7 +149,6 @@ public class Register extends javax.swing.JFrame {
         jPanel1.add(fieldPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 290, 190, 30));
 
         btnTheme.setBackground(new java.awt.Color(245, 245, 249));
-        btnTheme.setIcon(new javax.swing.ImageIcon("C:\\Users\\hfyh\\OneDrive\\Documentos\\NetBeansProjects\\ProyectoSuscripciones\\src\\main\\java\\Images\\dark-mode-black.png")); // NOI18N
         btnTheme.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         btnTheme.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -270,6 +274,8 @@ public class Register extends javax.swing.JFrame {
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
         // TODO add your handling code here:
+        new Login().setVisible(true);
+        dispose();
     }//GEN-LAST:event_btnCancelActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened

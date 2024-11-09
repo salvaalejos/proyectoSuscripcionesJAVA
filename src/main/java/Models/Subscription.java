@@ -11,21 +11,18 @@ package Models;
 public class Subscription {
     private int id_subscription;
     private User user;
-    private Sucursal sucursal;
-    private Double price;
     private String start_date;
     private String end_date;
     private boolean status;
+    private SubscriptionPlan plan;
 
-    public Subscription(int id_subscription, boolean status, String end_date, String start_date, Double price, Sucursal sucursal, User user) {
+    public Subscription(int id_subscription, User user, String start_date, String end_date, boolean status, SubscriptionPlan plan) {
         this.id_subscription = id_subscription;
-        this.price = price;
-        this.status = status;
-        this.end_date = end_date;
-        this.start_date = start_date;
-        this.price = price;
-        this.sucursal = sucursal;
         this.user = user;
+        this.start_date = start_date;
+        this.end_date = end_date;
+        this.status = status;
+        this.plan = plan;
     }
 
     public int getId_subscription() {
@@ -42,22 +39,6 @@ public class Subscription {
 
     public void setUser(User user) {
         this.user = user;
-    }
-
-    public Sucursal getSucursal() {
-        return sucursal;
-    }
-
-    public void setSucursal(Sucursal sucursal) {
-        this.sucursal = sucursal;
-    }
-
-    public Double getPrice() {
-        return price;
-    }
-
-    public void setPrice(Double price) {
-        this.price = price;
     }
 
     public String getStart_date() {
@@ -83,6 +64,16 @@ public class Subscription {
     public void setStatus(boolean status) {
         this.status = status;
     }
+
+    public SubscriptionPlan getPlan() {
+        return plan;
+    }
+
+    public void setPlan(SubscriptionPlan plan) {
+        this.plan = plan;
+    }
+    
+    
 
 
 }

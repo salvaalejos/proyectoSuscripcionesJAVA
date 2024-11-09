@@ -43,7 +43,7 @@
     </dependencies>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.release>23</maven.compiler.release>
+        <maven.compiler.release>19</maven.compiler.release>
         <exec.mainClass>com.mycompany.proyectosuscripciones.ProyectoSuscripciones</exec.mainClass>
     </properties>
 </project>

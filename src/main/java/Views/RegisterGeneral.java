@@ -6,6 +6,7 @@ package Views;
 
 import Models.Sucursal;
 import Models.User;
+import Utilities.Paths;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -36,13 +37,16 @@ public class RegisterGeneral extends javax.swing.JFrame {
     public RegisterGeneral(User admin) {
         this.admin = admin;
         initComponents();
+        panelImage1.setIcon(new ImageIcon(Paths.PONY_LOGO));
         setLocationRelativeTo(null);
         lblError.setVisible(false);
     }
     public RegisterGeneral() {
         initComponents();
         setLocationRelativeTo(null);
+        panelImage1.setIcon(new ImageIcon(Paths.PONY_LOGO));
         lblError.setVisible(false);
+        
     }
 
     /**
@@ -86,8 +90,6 @@ public class RegisterGeneral extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(245, 245, 249));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        panelImage1.setIcon(new javax.swing.ImageIcon("C:\\Users\\hfyh\\OneDrive\\Documentos\\NetBeansProjects\\ProyectoSuscripciones\\src\\main\\java\\Images\\PonyFood.png")); // NOI18N
 
         javax.swing.GroupLayout panelImage1Layout = new javax.swing.GroupLayout(panelImage1);
         panelImage1.setLayout(panelImage1Layout);
@@ -147,7 +149,6 @@ public class RegisterGeneral extends javax.swing.JFrame {
         jPanel1.add(fieldPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 290, 190, 30));
 
         btnTheme.setBackground(new java.awt.Color(245, 245, 249));
-        btnTheme.setIcon(new javax.swing.ImageIcon("C:\\Users\\hfyh\\OneDrive\\Documentos\\NetBeansProjects\\ProyectoSuscripciones\\src\\main\\java\\Images\\dark-mode-black.png")); // NOI18N
         btnTheme.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         btnTheme.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -204,12 +205,11 @@ public class RegisterGeneral extends javax.swing.JFrame {
         userTypeSelector.setBackground(new java.awt.Color(255, 255, 255));
         userTypeSelector.setFont(new java.awt.Font("Roboto Light", 0, 14)); // NOI18N
         userTypeSelector.setForeground(new java.awt.Color(0, 0, 0));
-        userTypeSelector.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Admin", "Vendedor" }));
-        userTypeSelector.setSelectedIndex(-1);
+        userTypeSelector.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Admin", "Cliente", "Vendedor" }));
         userTypeSelector.setToolTipText("Selecciona tu usuario");
-        userTypeSelector.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                userTypeSelectorPropertyChange(evt);
+        userTypeSelector.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                userTypeSelectorItemStateChanged(evt);
             }
         });
         jPanel1.add(userTypeSelector, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 500, 190, 30));
@@ -318,16 +318,6 @@ public class RegisterGeneral extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btnRegisterActionPerformed
 
-    private void userTypeSelectorPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_userTypeSelectorPropertyChange
-        // TODO add your handling code here:
-        if(userTypeSelector.getSelectedIndex() == 0){
-            sucursalSelector.setEnabled(false);
-        }else{
-            sucursalSelector.setEnabled(true);
-        }
-        
-    }//GEN-LAST:event_userTypeSelectorPropertyChange
-
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
         // TODO add your handling code here:
         new ControlPanel(admin).setVisible(true);
@@ -338,7 +328,23 @@ public class RegisterGeneral extends javax.swing.JFrame {
         // TODO add your handling code here:
         readSucursales();
         readUsers();
+        checkUserType();
     }//GEN-LAST:event_formWindowOpened
+
+    private void checkUserType(){
+        int indexSelected = userTypeSelector.getSelectedIndex();
+        System.out.println("Tipo usuario: "+(indexSelected+1));
+        if(indexSelected == 0){
+            sucursalSelector.setEnabled(false);
+        }else{
+            sucursalSelector.setEnabled(true);
+        }
+    }
+    
+    private void userTypeSelectorItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_userTypeSelectorItemStateChanged
+        // TODO add your handling code here:
+        checkUserType();
+    }//GEN-LAST:event_userTypeSelectorItemStateChanged
 
     private void readSucursales(){
         sucursales.clear();
@@ -360,7 +366,10 @@ public class RegisterGeneral extends javax.swing.JFrame {
             }
 
             for(Sucursal sucursal : sucursales){
-                sucursalSelector.addItem(sucursal.getNombre());
+                if(sucursal.isStatus()){
+                    sucursalSelector.addItem(sucursal.getNombre());
+                }
+                
             }
             sucursalSelector.updateUI();
 

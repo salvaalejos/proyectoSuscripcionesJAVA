@@ -71,52 +71,14 @@ public class SucursalControlPanel extends javax.swing.JPanel {
             for(Sucursal sucursal : sucursales){
 
 
-                JButton btnDeleteSucursal = new JButton("X");
-                JButton btnSetStatus = new JButton();
-
-                if (sucursal.isStatus()) {
-                    btnSetStatus.setText("Desactivar");
-                } else {
-                    btnSetStatus.setText("Activar");
+                String estado = "";
+                if(sucursal.isStatus()){
+                    estado = "Activa";
+                } else{
+                    estado = "Inactiva";
                 }
-
-                btnDeleteSucursal.addActionListener(e -> {
-                    sucursales.remove(sucursal);
-                    String json = new Gson().toJson(sucursales);
-                    try {
-                        FileWriter fw = new FileWriter(SUCURSAL_FILE);
-                        fw.write(json);
-                        fw.close();
-                        readSucursales();
-                    } catch (Exception ex) {
-                        ex.printStackTrace();
-                    }
-                });
-
-                btnSetStatus.addActionListener(e -> {
-                    sucursal.setStatus(!sucursal.isStatus());
-                    if(!sucursal.isStatus()){
-                        btnSetStatus.setText("Activar");
-                    } else{
-                        btnSetStatus.setText("Desactivar");
-                    }
-                    String json = new Gson().toJson(sucursales);
-                    try {
-                        FileWriter fw = new FileWriter(SUCURSAL_FILE);
-                        fw.write(json);
-                        fw.close();
-                        readSucursales();
-                    } catch (Exception ex) {
-                        ex.printStackTrace();
-                    }
-                });
-
-
-                jTable1.getColumn("Estado").setCellRenderer(new ButtonRenderer());
-                jTable1.getColumn("Estado").setCellEditor(new ButtonEditor(new JCheckBox(), btnSetStatus));
-                jTable1.getColumn("Eliminar").setCellRenderer(new ButtonRenderer());
-                jTable1.getColumn("Eliminar").setCellEditor(new ButtonEditor(new JCheckBox(), btnDeleteSucursal));
-                model.addRow(new Object[]{sucursal.getIdSucursal(), sucursal.getNombre(), sucursal.getDireccion(), sucursal.getTelefono(), "Estado", "Eliminar"});
+                
+                model.addRow(new Object[]{sucursal.getIdSucursal(), sucursal.getNombre(), sucursal.getDireccion(), sucursal.getTelefono(), estado});
                 jTable1.setModel(model);
                 jTable1.updateUI();
             }
@@ -151,7 +113,7 @@ public class SucursalControlPanel extends javax.swing.JPanel {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        btnAddSucursal = new javax.swing.JButton();
+        btnDeleteSucursal = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         fieldName = new javax.swing.JTextField();
         fieldAdress = new javax.swing.JTextField();
@@ -160,6 +122,8 @@ public class SucursalControlPanel extends javax.swing.JPanel {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         fieldGainsSucursal = new javax.swing.JSpinner();
+        btnAddSucursal1 = new javax.swing.JButton();
+        btnChangeStatus = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(245, 245, 249));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -176,14 +140,14 @@ public class SucursalControlPanel extends javax.swing.JPanel {
 
             },
             new String [] {
-                "ID_Sucursal", "Nombre", "Dirección", "Número", "Estado", "Eliminar"
+                "ID_Sucursal", "Nombre", "Dirección", "Número", "Estado"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -194,21 +158,22 @@ public class SucursalControlPanel extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
+        jTable1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane1.setViewportView(jTable1);
 
         add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 740, 465));
 
-        btnAddSucursal.setBackground(new java.awt.Color(105, 108, 255));
-        btnAddSucursal.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
-        btnAddSucursal.setForeground(new java.awt.Color(255, 255, 255));
-        btnAddSucursal.setText("Añadir sucursal");
-        btnAddSucursal.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        btnAddSucursal.addActionListener(new java.awt.event.ActionListener() {
+        btnDeleteSucursal.setBackground(new java.awt.Color(255, 51, 0));
+        btnDeleteSucursal.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
+        btnDeleteSucursal.setForeground(new java.awt.Color(255, 255, 255));
+        btnDeleteSucursal.setText("Eliminar");
+        btnDeleteSucursal.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        btnDeleteSucursal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAddSucursalActionPerformed(evt);
+                btnDeleteSucursalActionPerformed(evt);
             }
         });
-        add(btnAddSucursal, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 600, 180, 40));
+        add(btnDeleteSucursal, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 630, 180, 30));
 
         jLabel1.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 0, 0));
@@ -258,13 +223,67 @@ public class SucursalControlPanel extends javax.swing.JPanel {
             }
         });
         add(fieldGainsSucursal, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 610, 180, 30));
+
+        btnAddSucursal1.setBackground(new java.awt.Color(105, 108, 255));
+        btnAddSucursal1.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
+        btnAddSucursal1.setForeground(new java.awt.Color(255, 255, 255));
+        btnAddSucursal1.setText("Añadir sucursal");
+        btnAddSucursal1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        btnAddSucursal1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddSucursal1ActionPerformed(evt);
+            }
+        });
+        add(btnAddSucursal1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 600, 180, 40));
+
+        btnChangeStatus.setBackground(new java.awt.Color(0, 255, 51));
+        btnChangeStatus.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
+        btnChangeStatus.setForeground(new java.awt.Color(255, 255, 255));
+        btnChangeStatus.setText("Cambiar estado");
+        btnChangeStatus.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        btnChangeStatus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnChangeStatusActionPerformed(evt);
+            }
+        });
+        add(btnChangeStatus, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 590, 180, 30));
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnAddSucursalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddSucursalActionPerformed
+    private void btnDeleteSucursalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteSucursalActionPerformed
+        // TODO add your handling code here:
+        int indice = jTable1.getSelectedRow();
+        if(indice<0){
+            return;
+        }
+        
+        Sucursal sucursal = sucursales.get(indice);
+        JOptionPane.showMessageDialog(null, "Eliminacion de la sucursal: "+sucursal.getNombre());
+        
+        sucursales.remove(indice);
+        String json = new Gson().toJson(sucursales);
+        try {
+            FileWriter fw = new FileWriter(SUCURSAL_FILE);
+            fw.write(json);
+            fw.close();
+            readSucursales();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        
+    }//GEN-LAST:event_btnDeleteSucursalActionPerformed
+
+    private void fieldGainsSucursalPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_fieldGainsSucursalPropertyChange
+        // TODO add your handling code here:
+        if ((double) fieldGainsSucursal.getValue() > 100.0) {
+            fieldGainsSucursal.setValue(100);
+        }
+    }//GEN-LAST:event_fieldGainsSucursalPropertyChange
+
+    private void btnAddSucursal1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddSucursal1ActionPerformed
         // TODO add your handling code here:
         String name = fieldName.getText();
-        String adress = fieldName.getText();
-        String phone = fieldName.getText();
+        String adress = fieldAdress.getText();
+        String phone = fieldPhone.getText();
         Double gananciaSucursal = (double) fieldGainsSucursal.getValue();
         Double gananciaAdmin = 100 - gananciaSucursal;
         Integer idSucursal = sucursales.size() + 1;
@@ -277,75 +296,40 @@ public class SucursalControlPanel extends javax.swing.JPanel {
         fieldAdress.setText("");
         fieldPhone.setText("");
         fieldGainsSucursal.setValue(1.0);
+    }//GEN-LAST:event_btnAddSucursal1ActionPerformed
 
-        
-    }//GEN-LAST:event_btnAddSucursalActionPerformed
-
-    private void fieldGainsSucursalPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_fieldGainsSucursalPropertyChange
+    private void btnChangeStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChangeStatusActionPerformed
         // TODO add your handling code here:
-        if ((double) fieldGainsSucursal.getValue() > 100.0) {
-            fieldGainsSucursal.setValue(100);
+        int indice = jTable1.getSelectedRow();
+        if(indice<0){
+            return;
         }
-    }//GEN-LAST:event_fieldGainsSucursalPropertyChange
+        Sucursal sucursal = sucursales.get(indice);
+        
+        JOptionPane.showMessageDialog(null, "Estado cambiado de la sucursal: "+sucursal.getNombre());
+        sucursal.setStatus(!sucursal.isStatus());
+        String json = new Gson().toJson(sucursales);
+        try {
+            FileWriter fw = new FileWriter(SUCURSAL_FILE);
+            fw.write(json);
+            fw.close();
+            readSucursales();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }//GEN-LAST:event_btnChangeStatusActionPerformed
 
     /////////////////////////
-    class ButtonRenderer extends JButton implements TableCellRenderer {
-        public ButtonRenderer() {
-            setOpaque(true);
-        }
-
-        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-            setText((value == null) ? "" : value.toString());
-            return this;
-        }
-    }
-
-    class ButtonEditor extends DefaultCellEditor {
-        protected JButton button;
-        private String label;
-        private boolean isPushed;
-
-        public ButtonEditor(JCheckBox checkBox, JButton button) {
-            super(checkBox);
-            this.button = button;
-            this.button.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    fireEditingStopped();
-                }
-            });
-        }
-
-        public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
-            label = (value == null) ? "" : value.toString();
-            button.setText(label);
-            isPushed = true;
-            return button;
-        }
-
-        public Object getCellEditorValue() {
-            if (isPushed) {
-                // Perform action
-            }
-            isPushed = false;
-            return label;
-        }
-
-        public boolean stopCellEditing() {
-            isPushed = false;
-            return super.stopCellEditing();
-        }
-
-        protected void fireEditingStopped() {
-            super.fireEditingStopped();
-        }
-    }
+    
 
 
 
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAddSucursal;
+    private javax.swing.JButton btnAddSucursal1;
+    private javax.swing.JButton btnChangeStatus;
+    private javax.swing.JButton btnDeleteSucursal;
     private javax.swing.JTextField fieldAdress;
     private javax.swing.JSpinner fieldGainsSucursal;
     private javax.swing.JTextField fieldName;

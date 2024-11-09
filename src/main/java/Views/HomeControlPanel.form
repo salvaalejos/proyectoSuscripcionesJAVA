@@ -209,7 +209,7 @@
                           </Group>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
-                      <Component id="panelImage1" min="-2" max="-2" attributes="0"/>
+                      <Component id="imageDecoration" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="64" max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -218,7 +218,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                      <Component id="panelImage1" min="-2" max="-2" attributes="0"/>
+                      <Component id="imageDecoration" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
@@ -245,12 +245,7 @@
                 <Property name="text" type="java.lang.String" value="Bienvenido de nuevo, "/>
               </Properties>
             </Component>
-            <Container class="org.edisoncor.gui.panel.PanelImage" name="panelImage1">
-              <Properties>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="2" name="C:\Users\hfyh\OneDrive\Documentos\NetBeansProjects\ProyectoSuscripciones\src\main\java\Images\man-with-laptop-light.png"/>
-                </Property>
-              </Properties>
+            <Container class="org.edisoncor.gui.panel.PanelImage" name="imageDecoration">
 
               <Layout>
                 <DimensionLayout dim="0">
