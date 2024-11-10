@@ -14,7 +14,7 @@ public class User {
     private String username;
     private String password;
     private String phone;
-    private int user_type; // 1 = admin, 2 = user, 3 = cashier
+    private int user_type; // 1 = admin, 2 = user, 3 = cashier, 4 = sucursal
     private Integer idSucursal;
     private String email;
     private boolean status;

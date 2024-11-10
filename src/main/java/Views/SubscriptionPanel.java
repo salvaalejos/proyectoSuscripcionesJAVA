@@ -1,8 +1,21 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
+
 package Views;
+
+import Views.Client_Views.ControlPanelClients;
+import Models.Subscription;
+import Models.SubscriptionPlan;
+import Models.User;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import javax.swing.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.time.LocalDate;
+import java.util.ArrayList;
+
+import static Utilities.Paths.*;
 
 /**
  *
@@ -13,9 +26,69 @@ public class SubscriptionPanel extends javax.swing.JPanel {
     /**
      * Creates new form SubscriptionPanel
      */
+    private SubscriptionPlan plan;
+    private User user;
+    private JFrame parent;
+    private ArrayList<Subscription> subscriptions = new ArrayList<Subscription>();
+
     public SubscriptionPanel() {
         initComponents();
     }
+
+    public SubscriptionPanel(SubscriptionPlan plan, User user, JFrame parent) {
+        this.plan = plan;
+        this.user = user;
+        this.parent = parent;
+        initComponents();
+        showSubscriptions();
+    }
+
+    private void showSubscriptions() {
+        lblTitle.setText(plan.getTitle());
+        lblPrice.setText("$ " + plan.getPrice() + " mxn/mes");
+        descriptionArea.setText(plan.getDescription());
+    }
+
+    private void readSubscriptions() {
+        subscriptions.clear();
+        try {
+            BufferedReader br = new BufferedReader(
+                    new FileReader(SUBSCRIPTION_FILE)
+            );
+            String lectura;
+            String resultado = "";
+            while ((lectura = br.readLine()) != null) {
+                resultado += lectura;
+            }
+            br.close();
+
+            if (resultado.length() > 0) {
+                java.lang.reflect.Type listType =
+                        new TypeToken<ArrayList<Subscription>>() {
+                        }.getType();
+
+                subscriptions = new Gson().fromJson(resultado, listType);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private String getStartDate(){
+        LocalDate date = LocalDate.now();
+        String startDate = date.toString();
+
+        return startDate;
+    }
+
+    private String getEndDate(){
+        LocalDate date = LocalDate.now().plusMonths(1);
+        String endDate = date.toString();
+
+        return endDate;
+    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -77,6 +150,11 @@ public class SubscriptionPanel extends javax.swing.JPanel {
         btnChoose.setBackground(new java.awt.Color(16, 163, 127));
         btnChoose.setText("Escoger plan");
         btnChoose.setFont(new java.awt.Font("Roboto Black", 0, 14)); // NOI18N
+        btnChoose.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnChooseActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -121,6 +199,67 @@ public class SubscriptionPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnChooseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChooseActionPerformed
+        // TODO add your handling code here:
+        int confirmar = JOptionPane.showConfirmDialog(null, "¿Estás seguro de que deseas contratar este plan?", "Confirmar", JOptionPane.YES_NO_OPTION);
+        if (confirmar == JOptionPane.NO_OPTION) {
+            return;
+        }
+
+        readSubscriptions();
+        Subscription subscription;
+        for (Subscription s : subscriptions) {
+            if (s.getUser().getId_user() == user.getId_user() && s.isStatus()) {
+                JOptionPane.showMessageDialog(null, "Plan cambiado con éxito");
+                subscription = s;
+                subscription.setPlan(plan);
+                subscription.setStart_date(getStartDate());
+                subscription.setEnd_date(getEndDate());
+                subscriptions.set(subscriptions.indexOf(s), subscription);
+                String json = new Gson().toJson(subscriptions);
+                try {
+                    FileWriter fw = new FileWriter(SUBSCRIPTION_FILE);
+                    fw.write(json);
+                    fw.close();
+                    readSubscriptions();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                new ControlPanelClients(user).setVisible(true);
+                this.parent.dispose();
+                return;
+            }
+        }
+
+
+        subscription = new Subscription(
+                subscriptions.size() + 1,
+                user,
+                getStartDate(),
+                getEndDate(),
+                true,
+                plan
+        );
+        addSubscription(subscription);
+        JOptionPane.showMessageDialog(null, "Plan contratado con éxito");
+        new ControlPanelClients(user).setVisible(true);
+        this.parent.dispose();
+
+    }//GEN-LAST:event_btnChooseActionPerformed
+
+    private void addSubscription(Subscription subscription) {
+        readSubscriptions();
+        try {
+            subscriptions.add(subscription);
+            String json = new Gson().toJson(subscriptions);
+            FileWriter fw = new FileWriter(SUBSCRIPTION_FILE);
+            fw.write(json);
+            fw.close();
+            readSubscriptions();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private org.edisoncor.gui.button.ButtonSeven btnChoose;

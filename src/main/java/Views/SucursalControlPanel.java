@@ -23,6 +23,7 @@ import java.io.FileWriter;
 import java.util.ArrayList;
 
 import static Utilities.Paths.SUCURSAL_FILE;
+import static Utilities.Paths.USER_FILE;
 
 /**
  *
@@ -251,24 +252,13 @@ public class SucursalControlPanel extends javax.swing.JPanel {
 
     private void btnDeleteSucursalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteSucursalActionPerformed
         // TODO add your handling code here:
-        int indice = jTable1.getSelectedRow();
-        if(indice<0){
-            return;
-        }
         
-        Sucursal sucursal = sucursales.get(indice);
+        
+        Sucursal sucursal = selectedSucursal();
         JOptionPane.showMessageDialog(null, "Eliminacion de la sucursal: "+sucursal.getNombre());
         
-        sucursales.remove(indice);
-        String json = new Gson().toJson(sucursales);
-        try {
-            FileWriter fw = new FileWriter(SUCURSAL_FILE);
-            fw.write(json);
-            fw.close();
-            readSucursales();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+        sucursales.remove(sucursales.indexOf(selectedSucursal()));
+        save();
         
     }//GEN-LAST:event_btnDeleteSucursalActionPerformed
 
@@ -300,14 +290,35 @@ public class SucursalControlPanel extends javax.swing.JPanel {
 
     private void btnChangeStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChangeStatusActionPerformed
         // TODO add your handling code here:
-        int indice = jTable1.getSelectedRow();
-        if(indice<0){
-            return;
-        }
-        Sucursal sucursal = sucursales.get(indice);
+        
+        Sucursal sucursal = selectedSucursal();
         
         JOptionPane.showMessageDialog(null, "Estado cambiado de la sucursal: "+sucursal.getNombre());
         sucursal.setStatus(!sucursal.isStatus());
+        sucursales.set(sucursales.indexOf(selectedSucursal()), sucursal);
+        save();
+    }//GEN-LAST:event_btnChangeStatusActionPerformed
+
+    /////////////////////////
+    
+
+    private Sucursal selectedSucursal(){
+        Sucursal sucursal = null;
+        int indice = jTable1.getSelectedRow();
+        if(indice<0){
+            return null;
+        }
+        int idSucursal =  (int)jTable1.getValueAt(indice, 0);
+        for(Sucursal s : sucursales){
+            if(s.getIdSucursal()== idSucursal){
+                sucursal = s;
+            }
+        }
+        
+        return sucursal;
+    }
+    
+    private void save(){
         String json = new Gson().toJson(sucursales);
         try {
             FileWriter fw = new FileWriter(SUCURSAL_FILE);
@@ -317,11 +328,8 @@ public class SucursalControlPanel extends javax.swing.JPanel {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-    }//GEN-LAST:event_btnChangeStatusActionPerformed
-
-    /////////////////////////
-    
-
+        readSucursales();
+    }
 
 
 

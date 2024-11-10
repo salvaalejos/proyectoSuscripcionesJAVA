@@ -9,6 +9,7 @@ import Models.Sucursal;
 import Models.User;
 import static Utilities.Paths.SUCURSAL_FILE;
 import static Utilities.Paths.SUBSCRIPTION_PLAN_FILE;
+import static Utilities.Paths.USER_FILE;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import java.io.BufferedReader;
@@ -59,7 +60,7 @@ public class SubscriptionControlPanel extends javax.swing.JPanel {
             
             if(resultado.length() > 0) {
                 java.lang.reflect.Type listType = 
-                    new TypeToken<ArrayList<Sucursal>>() {}.getType();
+                    new TypeToken<ArrayList<SubscriptionPlan>>() {}.getType();
                 
                 subscriptions = new Gson().fromJson(resultado, listType);
             }
@@ -303,24 +304,12 @@ public class SubscriptionControlPanel extends javax.swing.JPanel {
 
     private void btnDeleteSucursalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteSucursalActionPerformed
         // TODO add your handling code here:
-        int indice = jTable1.getSelectedRow();
-        if(indice<0){
-            return;
-        }
-
-        SubscriptionPlan subscription = subscriptions.get(indice);
+        
+        SubscriptionPlan subscription = selectedSubscription();
         JOptionPane.showMessageDialog(null, "Eliminacion de la suscripción: "+subscription.getTitle());
 
-        subscriptions.remove(indice);
-        String json = new Gson().toJson(subscriptions);
-        try {
-            FileWriter fw = new FileWriter(SUBSCRIPTION_PLAN_FILE);
-            fw.write(json);
-            fw.close();
-            readSubscriptions();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+        subscriptions.remove(subscriptions.indexOf(subscription));
+        save();
 
     }//GEN-LAST:event_btnDeleteSucursalActionPerformed
 
@@ -353,14 +342,32 @@ public class SubscriptionControlPanel extends javax.swing.JPanel {
 
     private void btnChangeStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChangeStatusActionPerformed
         // TODO add your handling code here:
-        int indice = jTable1.getSelectedRow();
-        if(indice<0){
-            return;
-        }
-        SubscriptionPlan subscription = subscriptions.get(indice);
+        
+        SubscriptionPlan subscription = selectedSubscription();
 
         JOptionPane.showMessageDialog(null, "Estado cambiado de la suscripción: "+subscription.getTitle());
         subscription.setStatus(!subscription.isStatus());
+        subscriptions.set(subscriptions.indexOf(subscription), subscription);
+        save();
+    }//GEN-LAST:event_btnChangeStatusActionPerformed
+
+    private SubscriptionPlan selectedSubscription(){
+        SubscriptionPlan subscription = null;
+        int indice = jTable1.getSelectedRow();
+        if(indice<0){
+            return null;
+        }
+        int idSubscription =  (int)jTable1.getValueAt(indice, 0);
+        for(SubscriptionPlan s : subscriptions){
+            if(s.getIdSubscriptionPlan()== idSubscription){
+                subscription = s;
+            }
+        }
+        
+        return subscription;
+    }
+    
+    private void save(){
         String json = new Gson().toJson(subscriptions);
         try {
             FileWriter fw = new FileWriter(SUBSCRIPTION_PLAN_FILE);
@@ -370,8 +377,11 @@ public class SubscriptionControlPanel extends javax.swing.JPanel {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-    }//GEN-LAST:event_btnChangeStatusActionPerformed
-
+        
+        readSubscriptions();
+        readSucursales();
+    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddSucursal1;

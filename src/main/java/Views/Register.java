@@ -265,6 +265,8 @@ public class Register extends javax.swing.JFrame {
             User user = new User(idUser, name, username, phone, 2, sucursal.getIdSucursal(), email, true, password);
             registerUser(user);
             JOptionPane.showMessageDialog(null,"Usuario registrado con éxito");
+            new ChooseSubscription(user).setVisible(true);
+            dispose();
         } else {
             JOptionPane.showMessageDialog(null,"Las contraseñas no coinciden");
         }
@@ -305,7 +307,9 @@ public class Register extends javax.swing.JFrame {
             }
 
             for(Sucursal sucursal : sucursales){
-                sucursalSelector.addItem(sucursal.getNombre());
+                if(sucursal.isStatus()){
+                    sucursalSelector.addItem(sucursal.getNombre());
+                }
             }
             sucursalSelector.updateUI();
 

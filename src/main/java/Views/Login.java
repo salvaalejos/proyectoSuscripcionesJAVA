@@ -6,6 +6,7 @@ package Views;
 
 import Models.User;
 import Utilities.Paths;
+import Views.Client_Views.ControlPanelClients;
 import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.FlatLightLaf;
 import com.google.gson.Gson;
@@ -269,7 +270,8 @@ public class Login extends javax.swing.JFrame {
                                 dispose();
                                 break;
                             case 2: // Usuario
-                                JOptionPane.showMessageDialog(this, "Usuario tipo 2");
+                                new ControlPanelClients(user).setVisible(true);
+                                dispose();
                                 break;
                             case 3: // Vendedor
                                 JOptionPane.showMessageDialog(this, "Usuario tipo 3");

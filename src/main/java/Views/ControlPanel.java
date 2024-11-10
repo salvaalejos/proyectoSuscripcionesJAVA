@@ -436,22 +436,48 @@ public class ControlPanel extends javax.swing.JFrame {
 
     private void btnSellersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSellersActionPerformed
         // TODO add your handling code here:
+        panelControlContent.removeAll();
+
+        // Añadir el nuevo panel (succursalPanel)
+        panelControlContent.add(new SellerControlPanel(admin));
+
+        // Actualizar la interfaz gráfica
+        panelControlContent.updateUI();
+
     }//GEN-LAST:event_btnSellersActionPerformed
 
     private void btnClientsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientsActionPerformed
         // TODO add your handling code here:
+        panelControlContent.removeAll();
+
+        // Añadir el nuevo panel (succursalPanel)
+        panelControlContent.add(new ClientControlPanel(admin));
+
+        // Actualizar la interfaz gráfica
+        panelControlContent.updateUI();
     }//GEN-LAST:event_btnClientsActionPerformed
 
     private void btnAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAccountActionPerformed
         // TODO add your handling code here:
+        panelControlContent.removeAll();
+
+        // Añadir el nuevo panel (succursalPanel)
+        panelControlContent.add(new AccountSettingsPanel(admin));
+
+        // Actualizar la interfaz gráfica
+        panelControlContent.updateUI();
+        
+        
     }//GEN-LAST:event_btnAccountActionPerformed
 
     private void btnSubscriptionsMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSubscriptionsMouseEntered
         // TODO add your handling code here:
+        changeFocusGained(btnSucursal);
     }//GEN-LAST:event_btnSubscriptionsMouseEntered
 
     private void btnSubscriptionsMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSubscriptionsMouseExited
         // TODO add your handling code here:
+        changeFocusLost(btnSucursal);
     }//GEN-LAST:event_btnSubscriptionsMouseExited
 
     private void btnSubscriptionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubscriptionsActionPerformed

@@ -134,7 +134,7 @@ public class RegisterGeneral extends javax.swing.JFrame {
         btnCancel.setBackground(new java.awt.Color(255, 102, 102));
         btnCancel.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
         btnCancel.setForeground(new java.awt.Color(255, 255, 255));
-        btnCancel.setText("Cancelar");
+        btnCancel.setText("Volver");
         btnCancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelActionPerformed(evt);
@@ -205,7 +205,7 @@ public class RegisterGeneral extends javax.swing.JFrame {
         userTypeSelector.setBackground(new java.awt.Color(255, 255, 255));
         userTypeSelector.setFont(new java.awt.Font("Roboto Light", 0, 14)); // NOI18N
         userTypeSelector.setForeground(new java.awt.Color(0, 0, 0));
-        userTypeSelector.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Admin", "Cliente", "Vendedor" }));
+        userTypeSelector.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Admin", "Cliente", "Vendedor", "Sucursal" }));
         userTypeSelector.setToolTipText("Selecciona tu usuario");
         userTypeSelector.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
@@ -307,6 +307,19 @@ public class RegisterGeneral extends javax.swing.JFrame {
                     registerUser(seller);
                     JOptionPane.showMessageDialog(null,"Vendedor registrado con éxito");
                     break;
+                case 4: // Sucursal
+                    idSucursal = sucursalSelector.getSelectedIndex();
+                    sucursal = sucursales.get(idSucursal);
+                    if(name == null || username == null || password == null || phone == null || email == null || sucursal == null){
+                        lblError.setVisible(true);
+                        return;
+                    }
+                    lblError.setVisible(false);
+                    User sucur = new User(idUser, name, username, phone, user_type, sucursal.getIdSucursal(), email, true, password);
+                    registerUser(sucur);
+                    JOptionPane.showMessageDialog(null,"Cuenta de sucursal registrada con éxito");
+                    break;
+                    
                 default:
                     throw new IllegalArgumentException("Tipo de usuario no válido: " + user_type); // No se deberia tener otro tipo de usuario
             }
