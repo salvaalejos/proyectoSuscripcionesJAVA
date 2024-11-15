@@ -95,8 +95,8 @@
                     <Column editable="false" title="Telefono" type="java.lang.String"/>
                     <Column editable="false" title="Email" type="java.lang.String"/>
                     <Column editable="false" title="Sucursal" type="java.lang.String"/>
-                    <Column editable="true" title="Suscripcion" type="java.lang.String"/>
-                    <Column editable="true" title="Estado" type="java.lang.String"/>
+                    <Column editable="false" title="Suscripcion" type="java.lang.String"/>
+                    <Column editable="false" title="Estado" type="java.lang.String"/>
                   </Table>
                 </Property>
                 <Property name="selectionMode" type="int" value="0"/>

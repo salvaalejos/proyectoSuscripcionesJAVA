@@ -29,6 +29,7 @@ public class ChooseSubscription extends javax.swing.JFrame {
      * Creates new form ChooseSubscription
      */
     private User user;
+    private User seller;
     private ArrayList<SubscriptionPlan> plans = new ArrayList<SubscriptionPlan>();
     
 
@@ -36,9 +37,21 @@ public class ChooseSubscription extends javax.swing.JFrame {
     public ChooseSubscription() {
         initComponents();
     }
+    
+    public ChooseSubscription(User user, User seller) {
+        this.user = user;
+        this.seller = seller;
+        initComponents();
+        btnContinue.setVisible(false);
+        showSubscriptions();
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        System.out.println("Sucursal recibida: "+user.getSucursal());
+    }
 
     public ChooseSubscription(User user) {
         this.user = user;
+        this.seller = null;
         initComponents();
         showSubscriptions();
         setLocationRelativeTo(null);
@@ -82,14 +95,27 @@ public class ChooseSubscription extends javax.swing.JFrame {
                 continue;
             }
             contador++;
-            SubscriptionPanel card = new SubscriptionPanel(plan, user, this);
-            card.setBounds(x, y, width, height);
-            panelSubscriptions.add(card);
-            y += height + 10;
-            if (y > panelSubscriptions.getHeight()) {
-                y = 10;
-                x += width + 10;
+            if(seller != null){
+                SubscriptionPanel card = new SubscriptionPanel(plan, user, this, seller);
+                card.setBounds(x, y, width, height);
+                panelSubscriptions.add(card);
+                y += height + 10;
+                if (y > panelSubscriptions.getHeight()) {
+                    y = 10;
+                    x += width + 10;
+                }
+                System.out.println("Creada tarjeta con vendedor");
+            } else{
+                SubscriptionPanel card = new SubscriptionPanel(plan, user, this);
+                card.setBounds(x, y, width, height);
+                panelSubscriptions.add(card);
+                y += height + 10;
+                if (y > panelSubscriptions.getHeight()) {
+                    y = 10;
+                    x += width + 10;
+                }
             }
+
         }
         if(contador == 0) {
             JLabel label = new JLabel("No hay planes de suscripción disponibles");

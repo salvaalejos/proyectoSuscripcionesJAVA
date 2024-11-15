@@ -6,6 +6,7 @@ package Views;
 
 import Models.Sucursal;
 import Models.User;
+import Utilities.Authentication;
 import Utilities.Paths;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -268,65 +269,86 @@ public class RegisterGeneral extends javax.swing.JFrame {
         System.out.println("Repeat Password: " + repeatPassword);
 
         Sucursal sucursal;
-        if (passwordMatch) {
-            switch (user_type){
-                case 1: // Admin
-
-                    if(name == null || username == null || password == null || phone == null || email == null){
-                        lblError.setVisible(true);
-                        return;
-                    }
-                    lblError.setVisible(false);
-                    User admin = new User(idUser, name, username, phone, user_type, null, email, true, password);
-                    registerUser(admin);
-                    JOptionPane.showMessageDialog(null,"Administrador registrado con éxito");
-
-                    break;
-                case 2: // Usuario
-                    idSucursal = sucursalSelector.getSelectedIndex();
-                    sucursal = sucursales.get(idSucursal);
-                    if(name == null || username == null || password == null || phone == null || email == null || sucursal == null){
-                        lblError.setVisible(true);
-                        return;
-                    }
-                    lblError.setVisible(false);
-                    User user = new User(idUser, name, username, phone, user_type, sucursal.getIdSucursal(), email, true, password);
-                    registerUser(user);
-                    JOptionPane.showMessageDialog(null,"Usuario registrado con éxito");
-                    break;
-
-                case 3: // Vendedor
-                    idSucursal = sucursalSelector.getSelectedIndex();
-                    sucursal = sucursales.get(idSucursal);
-                    if(name == null || username == null || password == null || phone == null || email == null || sucursal == null){
-                        lblError.setVisible(true);
-                        return;
-                    }
-                    lblError.setVisible(false);
-                    User seller = new User(idUser, name, username, phone, user_type, sucursal.getIdSucursal(), email, true, password);
-                    registerUser(seller);
-                    JOptionPane.showMessageDialog(null,"Vendedor registrado con éxito");
-                    break;
-                case 4: // Sucursal
-                    idSucursal = sucursalSelector.getSelectedIndex();
-                    sucursal = sucursales.get(idSucursal);
-                    if(name == null || username == null || password == null || phone == null || email == null || sucursal == null){
-                        lblError.setVisible(true);
-                        return;
-                    }
-                    lblError.setVisible(false);
-                    User sucur = new User(idUser, name, username, phone, user_type, sucursal.getIdSucursal(), email, true, password);
-                    registerUser(sucur);
-                    JOptionPane.showMessageDialog(null,"Cuenta de sucursal registrada con éxito");
-                    break;
-                    
-                default:
-                    throw new IllegalArgumentException("Tipo de usuario no válido: " + user_type); // No se deberia tener otro tipo de usuario
-            }
-        } else{
-            lblError.setText("Error: Las contraseñas no coinciden");
+        if(!Authentication.validateEmail(email)){
+            lblError.setText("Por favor ingrese un email válido");
             lblError.setVisible(true);
+            return;
         }
+
+        if (password.length() < 8) {
+            lblError.setText("La contraseña debe tener al menos 8 caracteres");
+            lblError.setVisible(true);
+            return;
+        }
+
+        if(phone.length() < 8){
+            lblError.setText("Por favor ingrese un número de teléfono válido");
+            lblError.setVisible(true);
+            return;
+        }
+
+        if(!passwordMatch){
+            lblError.setText("Las contraseñas no coinciden");
+            lblError.setVisible(true);
+            return;
+        }
+
+        String hashedPassword = Authentication.hashSHA1(password);
+        switch (user_type){
+            case 1: // Admin
+
+                if(name == null || username == null || password == null || phone == null || email == null){
+                    lblError.setVisible(true);
+                    return;
+                }
+                lblError.setVisible(false);
+                User admin = new User(idUser, name, username, phone, user_type, null, email, true, hashedPassword);
+                registerUser(admin);
+                JOptionPane.showMessageDialog(null,"Administrador registrado con éxito");
+
+                break;
+            case 2: // Usuario
+                idSucursal = sucursalSelector.getSelectedIndex();
+                sucursal = sucursales.get(idSucursal);
+                if(name == null || username == null || password == null || phone == null || email == null || sucursal == null){
+                    lblError.setVisible(true);
+                    return;
+                }
+                lblError.setVisible(false);
+                User user = new User(idUser, name, username, phone, user_type, sucursal.getIdSucursal(), email, true, hashedPassword);
+                registerUser(user);
+                JOptionPane.showMessageDialog(null,"Usuario registrado con éxito");
+                break;
+
+            case 3: // Vendedor
+                idSucursal = sucursalSelector.getSelectedIndex();
+                sucursal = sucursales.get(idSucursal);
+                if(name == null || username == null || password == null || phone == null || email == null || sucursal == null){
+                    lblError.setVisible(true);
+                    return;
+                }
+                lblError.setVisible(false);
+                User seller = new User(idUser, name, username, phone, user_type, sucursal.getIdSucursal(), email, true, hashedPassword);
+                registerUser(seller);
+                JOptionPane.showMessageDialog(null,"Vendedor registrado con éxito");
+                break;
+            case 4: // Sucursal
+                idSucursal = sucursalSelector.getSelectedIndex();
+                sucursal = sucursales.get(idSucursal);
+                if(name == null || username == null || password == null || phone == null || email == null || sucursal == null){
+                    lblError.setVisible(true);
+                    return;
+                }
+                lblError.setVisible(false);
+                User sucur = new User(idUser, name, username, phone, user_type, sucursal.getIdSucursal(), email, true, hashedPassword);
+                registerUser(sucur);
+                JOptionPane.showMessageDialog(null,"Cuenta de sucursal registrada con éxito");
+                break;
+
+            default:
+                throw new IllegalArgumentException("Tipo de usuario no válido: " + user_type); // No se deberia tener otro tipo de usuario
+        }
+
 
         
     }//GEN-LAST:event_btnRegisterActionPerformed

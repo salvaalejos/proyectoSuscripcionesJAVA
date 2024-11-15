@@ -6,6 +6,7 @@ package Views;
 
 import Models.Sucursal;
 import Models.User;
+import Utilities.Authentication;
 import Utilities.Paths;
 import static Utilities.Paths.SUCURSAL_FILE;
 import static Utilities.Paths.USER_FILE;
@@ -30,10 +31,14 @@ public class Register extends javax.swing.JFrame {
      */
     private int actualTheme;
     private ArrayList<Sucursal> sucursales = new ArrayList<Sucursal>();
+    private ArrayList<Sucursal> sucursalesList = new ArrayList<Sucursal>();
     private ArrayList<User> users = new ArrayList<User>();
+    private User seller = null;
     
     public Register() {
         initComponents();
+        setLocationRelativeTo(null);
+        panelImage1.setIcon(new ImageIcon(Paths.PONY_LOGO));
         setLocationRelativeTo(null);
     }
     
@@ -48,6 +53,15 @@ public class Register extends javax.swing.JFrame {
         panelImage1.setIcon(new ImageIcon(Paths.PONY_LOGO));
         
         setLocationRelativeTo(null);
+    }
+    
+    public Register(User seller){
+        this.seller = seller;
+        initComponents();
+        setLocationRelativeTo(null);
+        panelImage1.setIcon(new ImageIcon(Paths.PONY_LOGO));
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }
 
     /**
@@ -254,18 +268,37 @@ public class Register extends javax.swing.JFrame {
         System.out.println("Repeat Password: " + repeatPassword);
 
         Sucursal sucursal;
+        if(!Authentication.validateEmail(email)){
+            JOptionPane.showMessageDialog(null,"Por favor ingrese un email válido");
+            return;
+        }
+
+        if (password.length() < 8) {
+            JOptionPane.showMessageDialog(null,"La contraseña debe tener al menos 8 caracteres");
+            return;
+        }
+
+        if(phone.length()<8){
+            JOptionPane.showMessageDialog(null,"Ingrese un telefono válido");
+            return;
+        }
 
         if (passwordMatch) {
+            String hashedPassword = new Authentication().hashSHA1(password);
             idSucursal = sucursalSelector.getSelectedIndex();
-            sucursal = sucursales.get(idSucursal);
+            sucursal = sucursalesList.get(idSucursal);
             if(name == null || username == null || password == null || phone == null || email == null || sucursal == null){
                 JOptionPane.showMessageDialog(null,"Por favor llene todos los campos");
                 return;
             }
-            User user = new User(idUser, name, username, phone, 2, sucursal.getIdSucursal(), email, true, password);
+            User user = new User(idUser, name, username, phone, 2, sucursal.getIdSucursal(), email, true, hashedPassword);
             registerUser(user);
             JOptionPane.showMessageDialog(null,"Usuario registrado con éxito");
-            new ChooseSubscription(user).setVisible(true);
+            if(seller != null){
+                new ChooseSubscription(user, seller).setVisible(true);
+            } else{
+                new ChooseSubscription(user).setVisible(true);
+            }
             dispose();
         } else {
             JOptionPane.showMessageDialog(null,"Las contraseñas no coinciden");
@@ -308,9 +341,22 @@ public class Register extends javax.swing.JFrame {
 
             for(Sucursal sucursal : sucursales){
                 if(sucursal.isStatus()){
-                    sucursalSelector.addItem(sucursal.getNombre());
+                    if(seller != null){
+                        System.out.println("Id sucursal: "+sucursal.getIdSucursal()+"\nSucursal asociada: "+seller.getSucursal());
+                        if(sucursal.getIdSucursal().equals(seller.getSucursal())){
+                            sucursalesList.add(sucursal);
+                        }
+                    } else{
+                        sucursalesList.add(sucursal);
+                    }
+
                 }
             }
+
+            for(Sucursal sucursal : sucursalesList){
+                sucursalSelector.addItem(sucursal.getNombre());
+            }
+
             sucursalSelector.updateUI();
 
 

@@ -6,6 +6,7 @@ package Views;
 
 import Models.Sucursal;
 import Models.User;
+import Utilities.Authentication;
 import Utilities.Paths;
 import static Utilities.Paths.USER_FILE;
 import com.google.gson.Gson;
@@ -260,9 +261,10 @@ public class AccountSettingsPanel extends javax.swing.JPanel {
         String username = fieldUsername.getText();
         String password = new String(fieldPassword.getPassword());
         String newPassword = new String(fieldNewPassword.getPassword());
-        boolean passwordMatchOld = user.getPassword().equals(password);
+        boolean passwordMatchOld = Authentication.verifyPassword(password, user.getPassword());
         String repeatPassword = new String(fieldRepeatPassword.getPassword());
         boolean passwordMatch = newPassword.equals(repeatPassword);
+        String newHashedPassword = Authentication.hashSHA1(newPassword);
         String phone = fieldPhone.getText();
         String email = fieldEmail.getText();
 
@@ -293,7 +295,7 @@ public class AccountSettingsPanel extends javax.swing.JPanel {
         user.setUsername(fieldUsername.getText());
         user.setEmail(fieldEmail.getText());
         user.setPhone(fieldPhone.getText());
-        user.setPassword(fieldNewPassword.getText());
+        user.setPassword(newHashedPassword);
         users.set(index, user);
         updateUsers();
         this.admin = user;

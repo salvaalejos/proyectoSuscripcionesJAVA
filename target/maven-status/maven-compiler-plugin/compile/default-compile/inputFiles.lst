@@ -7,6 +7,7 @@ C:\Users\hfyh\OneDrive\Documentos\NetBeansProjects\ProyectoSuscripciones\src\mai
 C:\Users\hfyh\OneDrive\Documentos\NetBeansProjects\ProyectoSuscripciones\src\main\java\Models\SubscriptionPlan.java
 C:\Users\hfyh\OneDrive\Documentos\NetBeansProjects\ProyectoSuscripciones\src\main\java\Models\Sucursal.java
 C:\Users\hfyh\OneDrive\Documentos\NetBeansProjects\ProyectoSuscripciones\src\main\java\Models\User.java
+C:\Users\hfyh\OneDrive\Documentos\NetBeansProjects\ProyectoSuscripciones\src\main\java\Utilities\Authentication.java
 C:\Users\hfyh\OneDrive\Documentos\NetBeansProjects\ProyectoSuscripciones\src\main\java\Utilities\Paths.java
 C:\Users\hfyh\OneDrive\Documentos\NetBeansProjects\ProyectoSuscripciones\src\main\java\Views\AccountSettingsPanel.java
 C:\Users\hfyh\OneDrive\Documentos\NetBeansProjects\ProyectoSuscripciones\src\main\java\Views\AddAdminControlPanel.java
@@ -20,6 +21,8 @@ C:\Users\hfyh\OneDrive\Documentos\NetBeansProjects\ProyectoSuscripciones\src\mai
 C:\Users\hfyh\OneDrive\Documentos\NetBeansProjects\ProyectoSuscripciones\src\main\java\Views\Login.java
 C:\Users\hfyh\OneDrive\Documentos\NetBeansProjects\ProyectoSuscripciones\src\main\java\Views\Register.java
 C:\Users\hfyh\OneDrive\Documentos\NetBeansProjects\ProyectoSuscripciones\src\main\java\Views\RegisterGeneral.java
+C:\Users\hfyh\OneDrive\Documentos\NetBeansProjects\ProyectoSuscripciones\src\main\java\Views\Seller_Views\HomeSellerPanel.java
+C:\Users\hfyh\OneDrive\Documentos\NetBeansProjects\ProyectoSuscripciones\src\main\java\Views\Seller_Views\SellerControlFrame.java
 C:\Users\hfyh\OneDrive\Documentos\NetBeansProjects\ProyectoSuscripciones\src\main\java\Views\SellerControlPanel.java
 C:\Users\hfyh\OneDrive\Documentos\NetBeansProjects\ProyectoSuscripciones\src\main\java\Views\SubscriptionControlPanel.java
 C:\Users\hfyh\OneDrive\Documentos\NetBeansProjects\ProyectoSuscripciones\src\main\java\Views\SubscriptionPanel.java

@@ -472,12 +472,12 @@ public class ControlPanel extends javax.swing.JFrame {
 
     private void btnSubscriptionsMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSubscriptionsMouseEntered
         // TODO add your handling code here:
-        changeFocusGained(btnSucursal);
+        changeFocusGained(btnSubscriptions);
     }//GEN-LAST:event_btnSubscriptionsMouseEntered
 
     private void btnSubscriptionsMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSubscriptionsMouseExited
         // TODO add your handling code here:
-        changeFocusLost(btnSucursal);
+        changeFocusLost(btnSubscriptions);
     }//GEN-LAST:event_btnSubscriptionsMouseExited
 
     private void btnSubscriptionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubscriptionsActionPerformed

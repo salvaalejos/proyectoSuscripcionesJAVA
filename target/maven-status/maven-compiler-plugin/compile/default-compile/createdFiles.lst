@@ -29,6 +29,7 @@ Models\Sucursal.class
 com\mycompany\proyectosuscripciones\ServerFrame.class
 Views\Register$6.class
 Views\ControlPanel$6.class
+Views\Seller_Views\SellerControlFrame$8.class
 Views\ControlPanel$13.class
 Views\ClientControlPanel$2.class
 Views\ChooseSubscription$1.class

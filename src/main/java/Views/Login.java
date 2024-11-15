@@ -5,8 +5,10 @@
 package Views;
 
 import Models.User;
+import Utilities.Authentication;
 import Utilities.Paths;
 import Views.Client_Views.ControlPanelClients;
+import Views.Seller_Views.SellerControlFrame;
 import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.FlatLightLaf;
 import com.google.gson.Gson;
@@ -262,7 +264,7 @@ public class Login extends javax.swing.JFrame {
                 System.out.println("Username: " + username);
                 System.out.println("Password: " + password);
                 for (User user : users) {
-                    if(user.getUsername().equals(username) && user.getPassword().equals(password)){
+                    if(user.getUsername().equals(username) && Authentication.verifyPassword(password, user.getPassword())){
                         int user_type = user.getUser_type();
                         switch (user_type){
                             case 1: // Admin
@@ -274,7 +276,8 @@ public class Login extends javax.swing.JFrame {
                                 dispose();
                                 break;
                             case 3: // Vendedor
-                                JOptionPane.showMessageDialog(this, "Usuario tipo 3");
+                                new SellerControlFrame(user).setVisible(true);
+                                dispose();
                                 break;
                             default:
                                 System.out.println("Usuario tipo 0");

@@ -25,6 +25,7 @@ public class HomeControlPanel extends javax.swing.JPanel {
         this.parent = parent;
         this.admin = user;
         initComponents();
+
         imageDecoration.setIcon(new ImageIcon(Paths.MAN));
         lblName.setText(user.getName()+"!");
         

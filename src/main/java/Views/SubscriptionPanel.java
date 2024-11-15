@@ -1,10 +1,8 @@
 
 package Views;
 
+import Models.*;
 import Views.Client_Views.ControlPanelClients;
-import Models.Subscription;
-import Models.SubscriptionPlan;
-import Models.User;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -28,8 +26,11 @@ public class SubscriptionPanel extends javax.swing.JPanel {
      */
     private SubscriptionPlan plan;
     private User user;
+    private User seller = null;
     private JFrame parent;
     private ArrayList<Subscription> subscriptions = new ArrayList<Subscription>();
+    private ArrayList<Comition> comitions = new ArrayList<Comition>();
+    private ArrayList<Payment> payments = new ArrayList<Payment>();
 
     public SubscriptionPanel() {
         initComponents();
@@ -43,10 +44,61 @@ public class SubscriptionPanel extends javax.swing.JPanel {
         showSubscriptions();
     }
 
+    SubscriptionPanel(SubscriptionPlan plan, User user, JFrame parent, User seller) {
+        this.seller = seller;
+        this.plan = plan;
+        this.user = user;
+        this.parent = parent;
+        initComponents();
+        showSubscriptions();
+        readPayments();
+        readComitions();
+    }
+
     private void showSubscriptions() {
         lblTitle.setText(plan.getTitle());
         lblPrice.setText("$ " + plan.getPrice() + " mxn/mes");
         descriptionArea.setText(plan.getDescription());
+    }
+
+
+    private void readPayments() {
+        payments.clear();
+        try {
+            BufferedReader br = new BufferedReader(
+                    new FileReader(PAYMENT_FILE)
+            );
+            String lectura;
+            String resultado = "";
+            while ((lectura = br.readLine()) != null) {
+                resultado += lectura;
+            }
+            br.close();
+
+            if (resultado.length() > 0) {
+                java.lang.reflect.Type listType =
+                        new TypeToken<ArrayList<Payment>>() {
+                        }.getType();
+
+                payments = new Gson().fromJson(resultado, listType);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void addPayment(Payment payment) {
+        readPayments();
+        try {
+            payments.add(payment);
+            String json = new Gson().toJson(payments);
+            FileWriter fw = new FileWriter(PAYMENT_FILE);
+            fw.write(json);
+            fw.close();
+            readPayments();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void readSubscriptions() {
@@ -73,6 +125,31 @@ public class SubscriptionPanel extends javax.swing.JPanel {
             e.printStackTrace();
         }
 
+    }
+
+    private void readComitions() {
+        comitions.clear();
+        try {
+            BufferedReader br = new BufferedReader(
+                    new FileReader(COMITION_FILE)
+            );
+            String lectura;
+            String resultado = "";
+            while ((lectura = br.readLine()) != null) {
+                resultado += lectura;
+            }
+            br.close();
+
+            if (resultado.length() > 0) {
+                java.lang.reflect.Type listType =
+                        new TypeToken<ArrayList<Comition>>() {
+                        }.getType();
+
+                comitions = new Gson().fromJson(resultado, listType);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private String getStartDate(){
@@ -232,6 +309,8 @@ public class SubscriptionPanel extends javax.swing.JPanel {
         }
 
 
+
+
         subscription = new Subscription(
                 subscriptions.size() + 1,
                 user,
@@ -240,10 +319,37 @@ public class SubscriptionPanel extends javax.swing.JPanel {
                 true,
                 plan
         );
+        // new Payment
+        // Añadir para cuando vende alguien
+
+
+        Payment payment = new Payment(
+                payments.size() + 1,
+                subscription,
+                plan.getPrice(),
+                getStartDate()
+        );
+
         addSubscription(subscription);
-        JOptionPane.showMessageDialog(null, "Plan contratado con éxito");
-        new ControlPanelClients(user).setVisible(true);
-        this.parent.dispose();
+        addPayment(payment);
+
+        if(seller != null){
+            Comition comition = new Comition(
+                    comitions.size() + 1,
+                    seller,
+                    subscription,
+                    payment.getAmount() * 0.1,
+                    getStartDate()
+            );
+            addComition(comition);
+            JOptionPane.showMessageDialog(null, "Plan vendido con éxito");
+            this.parent.dispose();
+            return;
+        } else{
+            JOptionPane.showMessageDialog(null, "Plan contratado con éxito");
+            new ControlPanelClients(user).setVisible(true);
+            this.parent.dispose();
+        }
 
     }//GEN-LAST:event_btnChooseActionPerformed
 
@@ -256,6 +362,20 @@ public class SubscriptionPanel extends javax.swing.JPanel {
             fw.write(json);
             fw.close();
             readSubscriptions();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void addComition(Comition comition) {
+        readComitions();
+        try {
+            comitions.add(comition);
+            String json = new Gson().toJson(comitions);
+            FileWriter fw = new FileWriter(COMITION_FILE);
+            fw.write(json);
+            fw.close();
+            readComitions();
         } catch (Exception e) {
             e.printStackTrace();
         }

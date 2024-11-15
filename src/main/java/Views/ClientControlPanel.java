@@ -214,7 +214,7 @@ public class ClientControlPanel extends javax.swing.JPanel {
                 java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, true, true
+                false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -303,16 +303,8 @@ public class ClientControlPanel extends javax.swing.JPanel {
         User client = selectedClient();
         JOptionPane.showMessageDialog(null, "Eliminacion del usuario "+client.getUsername());
 
-        clients.remove(clients.indexOf(selectedClient()));
-        String json = new Gson().toJson(clients);
-        try {
-            FileWriter fw = new FileWriter(USER_FILE);
-            fw.write(json);
-            fw.close();
-            readClients();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+        clients.remove(clients.indexOf(client));
+        save();
     }//GEN-LAST:event_btnDeleteClientActionPerformed
 
     private void btnChangeSucursalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChangeSucursalActionPerformed
@@ -331,16 +323,7 @@ public class ClientControlPanel extends javax.swing.JPanel {
         
         JOptionPane.showMessageDialog(null, "Cambio de sucursal del usuario "+client.getUsername());
         client.setSucursal(idSucursal);
-        clients.set(clients.indexOf(selectedClient()), client);
-        String json = new Gson().toJson(clients);
-        try {
-            FileWriter fw = new FileWriter(USER_FILE);
-            fw.write(json);
-            fw.close();
-            readClients();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+        save();
 
     }//GEN-LAST:event_btnChangeSucursalActionPerformed
 
